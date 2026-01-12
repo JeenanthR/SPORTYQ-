@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SportyQ</title>
 <style>
+/* ==================== GLOBAL STYLES ==================== */
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body { height:100%; width:100%; font-family:"Poppins", sans-serif; background:#0f172a; color:#fff; overflow:hidden; }
 body { background:url("Sports.jpg") no-repeat center center fixed; background-size:cover; }
 
+/* ==================== HEADER ==================== */
 header { width:100%; padding:10px 20px; display:flex; align-items:center; justify-content:space-between; position:absolute; top:0; z-index:10; background: transparent; }
 .logo { display:flex; align-items:center; gap:10px; }
 .logo img { width:110px; height:auto; }
@@ -17,10 +19,12 @@ header { width:100%; padding:10px 20px; display:flex; align-items:center; justif
 .auth-buttons a { text-decoration:none; padding:8px 20px; border-radius:8px; font-weight:bold; font-size:0.95rem; background:#1e90ff; color:#fff; border:2px solid #1e90ff; cursor:pointer; transition:0.3s; }
 .auth-buttons a:hover { background:#fff; color:#1e90ff; }
 
+/* ==================== SECTIONS & ANIMATIONS ==================== */
 .section { width:100%; height:100vh; display:none; flex-direction:column; justify-content:center; align-items:center; padding-top:80px; }
 .section.active { display:flex; animation: fadeIn 0.5s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+/* ==================== WELCOME SECTION ==================== */
 .welcome .content { display:flex; width:100%; height:calc(100% - 80px); justify-content:space-around; align-items:center; padding:20px; }
 .intro { width:45%; height:90%; padding:25px; background: rgba(0,0,0,0.6); border-radius:12px; overflow-y:auto; }
 .intro h2 { font-size:3rem; margin-bottom:15px; }
@@ -30,6 +34,7 @@ header { width:100%; padding:10px 20px; display:flex; align-items:center; justif
 .slide { position:absolute; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1s ease-in-out; }
 .slide.active { opacity:1; }
 
+/* ==================== SPORTS SELECTION ==================== */
 .sports-selection { background: rgba(0,0,0,0.4); padding:20px; }
 .sports-selection h2 { margin-bottom:30px; font-size:2.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 .sports-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:25px; width:90%; max-width: 1200px; }
@@ -40,6 +45,7 @@ header { width:100%; padding:10px 20px; display:flex; align-items:center; justif
 .card button { margin-bottom:20px; padding:10px 25px; border:none; border-radius:8px; background:#1e90ff; color:#fff; cursor:pointer; font-weight:bold; transition: 0.2s; }
 .card button:hover { background: #0077ea; }
 
+/* ==================== QUIZ INTERFACE ==================== */
 .quiz-container { background: rgba(15, 23, 42, 0.95); width: 90%; max-width: 800px; padding: 30px; border-radius: 20px; box-shadow: 0 0 20px rgba(30, 144, 255, 0.3); text-align: center; border: 1px solid rgba(30, 144, 255, 0.3); position: relative; overflow: hidden; }
 .quiz-header { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 1.2rem; color: #88ccff; }
 .question-box { margin: 30px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; }
@@ -53,6 +59,7 @@ header { width:100%; padding:10px 20px; display:flex; align-items:center; justif
 .game-btn { padding: 10px 20px; background: #1e90ff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; }
 .game-btn.secondary { background: #475569; }
 
+/* ==================== ADMIN PANEL ==================== */
 .admin-panel { background: rgba(0,0,0,0.4); padding:20px; width: 100%; height: 100%; overflow-y: auto; }
 .admin-panel h2 { margin-bottom:30px; font-size:2.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); text-align: center; }
 .admin-controls { display: flex; gap: 15px; margin-bottom: 30px; justify-content: center; flex-wrap: wrap; }
@@ -79,6 +86,7 @@ header { width:100%; padding:10px 20px; display:flex; align-items:center; justif
 .option-item { padding: 8px; background: rgba(255,255,255,0.05); border-radius: 5px; }
 .option-item.correct { background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; }
 
+/* ==================== EFFECTS & CELEBRATIONS ==================== */
 .celebration-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; display: none; }
 .confetti { position: absolute; width: 10px; height: 20px; background: #f00; top: 0; opacity: 0; }
 .firework { position: absolute; width: 5px; height: 5px; border-radius: 50%; box-shadow: 0 0 10px #fff; top: 50%; left: 50%; opacity: 0; }
@@ -89,6 +97,7 @@ header { width:100%; padding:10px 20px; display:flex; align-items:center; justif
 .pulse-effect { animation: pulse 0.5s ease-in-out; }
 @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
+/* ==================== MODALS ==================== */
 .modal { position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display:none; justify-content:center; align-items:center; z-index:100; backdrop-filter: blur(5px); }
 .modal.active { display:flex; animation: popIn 0.3s ease; }
 @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -369,211 +378,210 @@ let allQuestions = JSON.parse(localStorage.getItem('sportyq_custom_questions')) 
 const defaultQuestions = {
     Football: [
         { q: "Who won the 2018 FIFA World Cup?", correct: "France", options: ["France", "Croatia", "Brazil", "Germany"] },
-        { q: "Who has won the most Ballon d'Or awards?", correct: "Messi", options: ["Ronaldo", "Messi", "Pele", "Maradona"] },
-        { q: "Which club plays at Anfield?", correct: "Liverpool", options: ["Man Utd", "Liverpool", "Chelsea", "Arsenal"] },
-        { q: "Who is known as 'The Special One'?", correct: "Mourinho", options: ["Pep Guardiola", "Klopp", "Mourinho", "Ancelotti"] },
-        { q: "Which country won Euro 2016?", correct: "Portugal", options: ["France", "Germany", "Portugal", "Spain"] },
-        { q: "Who is the all-time top scorer in the Champions League?", correct: "Ronaldo", options: ["Messi", "Ronaldo", "Lewandowski", "Benzema"] },
-        { q: "Which country is Pele from?", correct: "Brazil", options: ["Argentina", "Brazil", "Portugal", "Spain"] },
-        { q: "Where was the 2022 World Cup held?", correct: "Qatar", options: ["Russia", "Brazil", "Qatar", "USA"] },
-        { q: "Which player scored the 'Hand of God' goal?", correct: "Maradona", options: ["Pele", "Messi", "Maradona", "Zidane"] },
-        { q: "Which English club went an entire season unbeaten in 2003-04?", correct: "Arsenal", options: ["Man Utd", "Chelsea", "Liverpool", "Arsenal"] },
-        { q: "Who won the 2014 World Cup?", correct: "Germany", options: ["Argentina", "Brazil", "Germany", "Spain"] },
-        { q: "Which club did Alex Ferguson manage for 26 years?", correct: "Man Utd", options: ["Liverpool", "Man Utd", "Everton", "Chelsea"] },
-        { q: "What color card results in a sending off?", correct: "Red", options: ["Yellow", "Red", "Blue", "Green"] },
-        { q: "Which country has won the most World Cups?", correct: "Brazil", options: ["Germany", "Italy", "Brazil", "Argentina"] },
-        { q: "Who is the manager of Manchester City (2024)?", correct: "Guardiola", options: ["Klopp", "Arteta", "Guardiola", "Ten Hag"] },
-        { q: "Which team is nicknamed 'The Old Lady'?", correct: "Juventus", options: ["Milan", "Inter", "Juventus", "Roma"] },
-        { q: "Who won the Golden Boot at the 2018 World Cup?", correct: "Kane", options: ["Mbappe", "Kane", "Modric", "Griezmann"] },
-        { q: "Which stadium is known as the 'Theatre of Dreams'?", correct: "Old Trafford", options: ["Anfield", "Wembley", "Old Trafford", "Camp Nou"] },
-        { q: "Who won the 2022 World Cup?", correct: "Argentina", options: ["France", "Brazil", "Argentina", "Croatia"] },
-        { q: "Which player is nicknamed 'El Nino'?", correct: "Torres", options: ["Villa", "Torres", "Raul", "Xavi"] },
-        { q: "Who is the manager of Liverpool FC (2024)?", correct: "Arne Slot", options: ["Klopp", "Arne Slot", "Pep", "Tuchel"] },
-        { q: "Which team won the Champions League in 2023?", correct: "Man City", options: ["Inter Milan", "Man City", "Real Madrid", "Chelsea"] },
-        { q: "Who is the all-time top scorer for the Brazil national team?", correct: "Neymar", options: ["Pele", "Neymar", "Ronaldo", "Romario"] },
-        { q: "Which country hosted the 2010 World Cup?", correct: "South Africa", options: ["Brazil", "Germany", "South Africa", "Russia"] },
-        { q: "Which player transferred from Barcelona to PSG for a record fee?", correct: "Neymar", options: ["Messi", "Neymar", "Suarez", "Mbappe"] },
-        { q: "What is the name of Arsenal's home stadium?", correct: "Emirates", options: ["Highbury", "Emirates", "Stamford Bridge", "Anfield"] },
-        { q: "Which German club has won the most Bundesliga titles?", correct: "Bayern Munich", options: ["Dortmund", "Bayern Munich", "Leverkusen", "Leipzig"] },
-        { q: "Who scored the winning goal in the 2014 World Cup final?", correct: "Gotze", options: ["Muller", "Gotze", "Klose", "Ozil"] },
-        { q: "Which Italian club has won the most Serie A titles?", correct: "Juventus", options: ["AC Milan", "Inter", "Juventus", "Napoli"] },
-        { q: "Who is the captain of the England national team (2024)?", correct: "Kane", options: ["Rice", "Kane", "Bellingham", "Stones"] },
-        { q: "Which country does Erling Haaland represent?", correct: "Norway", options: ["Sweden", "Denmark", "Norway", "Finland"] },
-        { q: "Who won the Copa America in 2021?", correct: "Argentina", options: ["Brazil", "Argentina", "Chile", "Uruguay"] },
-        { q: "Which club is known as 'The Red Devils'?", correct: "Man Utd", options: ["Liverpool", "Arsenal", "Man Utd", "Milan"] },
-        { q: "Who is the top scorer in Premier League history?", correct: "Shearer", options: ["Rooney", "Shearer", "Kane", "Henry"] },
-        { q: "Which country won the first ever World Cup in 1930?", correct: "Uruguay", options: ["Argentina", "Brazil", "Uruguay", "Italy"] },
-        { q: "Who is the goalkeeper for Real Madrid (2024)?", correct: "Courtois", options: ["Lunin", "Courtois", "Neuer", "Oblak"] },
-        { q: "Which player is known as 'CR7'?", correct: "Ronaldo", options: ["Ronaldo", "Messi", "Ronaldinho", "Rooney"] },
-        { q: "What is the duration of a standard football match?", correct: "90 mins", options: ["60 mins", "80 mins", "90 mins", "100 mins"] },
-        { q: "Which team plays at the Camp Nou?", correct: "Barcelona", options: ["Real Madrid", "Barcelona", "Valencia", "Sevilla"] },
-        { q: "Who won the Women's World Cup in 2023?", correct: "Spain", options: ["England", "Spain", "USA", "Sweden"] },
-        { q: "Who is the manager of Real Madrid (2024)?", correct: "Ancelotti", options: ["Zidane", "Ancelotti", "Mourinho", "Alonso"] },
-        { q: "Which player has the most assists in Premier League history?", correct: "Giggs", options: ["De Bruyne", "Giggs", "Fabregas", "Rooney"] },
-        { q: "Which country does Mohamed Salah represent?", correct: "Egypt", options: ["Morocco", "Egypt", "Senegal", "Nigeria"] },
-        { q: "Who won the Premier League in the 2015-2016 season?", correct: "Leicester City", options: ["Chelsea", "Man City", "Leicester City", "Arsenal"] },
-        { q: "Which French player is nicknamed 'The King' at Arsenal?", correct: "Henry", options: ["Vieira", "Pires", "Henry", "Giroud"] },
-        { q: "Who is the all-time top scorer for England?", correct: "Kane", options: ["Rooney", "Charlton", "Kane", "Lineker"] },
-        { q: "Which club did Lionel Messi join after leaving Barcelona?", correct: "PSG", options: ["Man City", "PSG", "Inter Miami", "Chelsea"] },
-        { q: "Who won the 2006 World Cup?", correct: "Italy", options: ["France", "Italy", "Germany", "Brazil"] },
-        { q: "Which player famously headbutted Materazzi in the 2006 final?", correct: "Zidane", options: ["Henry", "Trezeguet", "Zidane", "Thuram"] },
-        { q: "Which stadium hosted the 2024 Champions League final?", correct: "Wembley", options: ["Paris", "Wembley", "Munich", "Istanbul"] }
+        { q: "Who has won the most Ballon d'Or awards?", correct: "Lionel Messi", options: ["Cristiano Ronaldo", "Lionel Messi", "Pele", "Maradona"] },
+        { q: "Which club plays at Anfield?", correct: "Liverpool", options: ["Manchester United", "Liverpool", "Chelsea", "Arsenal"] },
+        { q: "Which country won the first FIFA World Cup in 1930?", correct: "Uruguay", options: ["Uruguay", "Brazil", "Argentina", "Italy"] },
+        { q: "Who scored the 'Hand of God' goal?", correct: "Diego Maradona", options: ["Lionel Messi", "Diego Maradona", "Pele", "Zinedine Zidane"] },
+        { q: "Which player has the most Champions League titles?", correct: "Cristiano Ronaldo", options: ["Cristiano Ronaldo", "Lionel Messi", "Paolo Maldini", "Francisco Gento"] },
+        { q: "Which country has won the most World Cups?", correct: "Brazil", options: ["Brazil", "Germany", "Italy", "Argentina"] },
+        { q: "What is the nickname of Manchester United's home stadium?", correct: "The Theatre of Dreams", options: ["The Theatre of Dreams", "The Emirates", "Stamford Bridge", "Etihad Stadium"] },
+        { q: "Who is the all-time top scorer in Premier League history?", correct: "Alan Shearer", options: ["Alan Shearer", "Wayne Rooney", "Harry Kane", "Sergio Aguero"] },
+        { q: "Which team won the first UEFA Champions League in 1955-56?", correct: "Real Madrid", options: ["Real Madrid", "Barcelona", "AC Milan", "Bayern Munich"] },
+        { q: "Who won the 2022 FIFA World Cup?", correct: "Argentina", options: ["Argentina", "France", "Brazil", "Germany"] },
+        { q: "Which player is known as 'The Egyptian King'?", correct: "Mohamed Salah", options: ["Mohamed Salah", "Sadio Mane", "Pierre-Emerick Aubameyang", "Riyad Mahrez"] },
+        { q: "Which club has won the most UEFA Champions League titles?", correct: "Real Madrid", options: ["Real Madrid", "AC Milan", "Bayern Munich", "Liverpool"] },
+        { q: "Who scored the fastest hat-trick in Premier League history?", correct: "Sadio Mane", options: ["Sadio Mane", "Sergio Aguero", "Robbie Fowler", "Alan Shearer"] },
+        { q: "Which country hosted the 2014 FIFA World Cup?", correct: "Brazil", options: ["Brazil", "Germany", "South Africa", "Russia"] },
+        { q: "Who is the only player to win the World Cup as both player and manager?", correct: "Mario Zagallo", options: ["Mario Zagallo", "Franz Beckenbauer", "Didier Deschamps", "Zinedine Zidane"] },
+        { q: "Which player has the most assists in Premier League history?", correct: "Ryan Giggs", options: ["Ryan Giggs", "Cesc Fabregas", "Frank Lampard", "Kevin De Bruyne"] },
+        { q: "What is the maximum number of players a football team can have on the field?", correct: "11", options: ["11", "10", "12", "9"] },
+        { q: "Who won the 2023 UEFA Champions League?", correct: "Manchester City", options: ["Manchester City", "Inter Milan", "Real Madrid", "Bayern Munich"] },
+        { q: "Which club is known as 'The Gunners'?", correct: "Arsenal", options: ["Arsenal", "Chelsea", "Tottenham", "West Ham"] },
+        { q: "Who is the all-time top scorer for Brazil?", correct: "Pele", options: ["Pele", "Ronaldo", "Neymar", "Romario"] },
+        { q: "Which country won the 2010 FIFA World Cup?", correct: "Spain", options: ["Spain", "Netherlands", "Germany", "Uruguay"] },
+        { q: "Who is known as 'The Special One' in football?", correct: "Jose Mourinho", options: ["Jose Mourinho", "Pep Guardiola", "Alex Ferguson", "Carlo Ancelotti"] },
+        { q: "Which player has won the most FIFA World Player of the Year awards?", correct: "Lionel Messi", options: ["Lionel Messi", "Cristiano Ronaldo", "Zinedine Zidane", "Ronaldo"] },
+        { q: "What is the duration of a standard football match?", correct: "90 minutes", options: ["90 minutes", "80 minutes", "100 minutes", "120 minutes"] },
+        { q: "Which club has won the most Serie A titles?", correct: "Juventus", options: ["Juventus", "AC Milan", "Inter Milan", "Roma"] },
+        { q: "Who won the first European Championship in 1960?", correct: "Soviet Union", options: ["Soviet Union", "Yugoslavia", "Spain", "Germany"] },
+        { q: "Which player has the most caps for England?", correct: "Peter Shilton", options: ["Peter Shilton", "Wayne Rooney", "David Beckham", "Steven Gerrard"] },
+        { q: "What is the offside rule in football?", correct: "A player is offside if nearer to opponent's goal line than both ball and second-last opponent", options: ["A player is offside if nearer to opponent's goal line than both ball and second-last opponent", "A player is offside if in opponent's half", "A player is offside if behind all defenders", "A player is offside if not touching the ball"] },
+        { q: "Which country has never won the FIFA World Cup?", correct: "Netherlands", options: ["Netherlands", "Argentina", "England", "France"] },
+        { q: "Who scored the 'Goal of the Century' in 1986?", correct: "Diego Maradona", options: ["Diego Maradona", "Pele", "Zinedine Zidane", "Lionel Messi"] },
+        { q: "Which club has won the most Ligue 1 titles?", correct: "Paris Saint-Germain", options: ["Paris Saint-Germain", "Marseille", "Lyon", "Monaco"] },
+        { q: "Who is the youngest player to score in a World Cup?", correct: "Pele", options: ["Pele", "Kylian Mbappe", "Michael Owen", "Lionel Messi"] },
+        { q: "What does VAR stand for in football?", correct: "Video Assistant Referee", options: ["Video Assistant Referee", "Virtual Action Review", "Video Analysis Referee", "Visual Aid Referee"] },
+        { q: "Which team won the first Copa America in 1916?", correct: "Uruguay", options: ["Uruguay", "Argentina", "Brazil", "Chile"] },
+        { q: "Who is the all-time top scorer in UEFA Champions League?", correct: "Cristiano Ronaldo", options: ["Cristiano Ronaldo", "Lionel Messi", "Robert Lewandowski", "Karim Benzema"] },
+        { q: "Which country hosted the 2002 FIFA World Cup?", correct: "South Korea & Japan", options: ["South Korea & Japan", "Germany", "France", "USA"] },
+        { q: "Who won the 2021 Ballon d'Or?", correct: "Lionel Messi", options: ["Lionel Messi", "Robert Lewandowski", "Cristiano Ronaldo", "Karim Benzema"] },
+        { q: "Which club has the nickname 'The Red Devils'?", correct: "Manchester United", options: ["Manchester United", "Liverpool", "Arsenal", "Chelsea"] },
+        { q: "Who is the only goalkeeper to win the Ballon d'Or?", correct: "Lev Yashin", options: ["Lev Yashin", "Gianluigi Buffon", "Manuel Neuer", "Iker Casillas"] },
+        { q: "Which country won the 1998 FIFA World Cup?", correct: "France", options: ["France", "Brazil", "Italy", "Germany"] },
+        { q: "Who is the manager with most Champions League titles?", correct: "Carlo Ancelotti", options: ["Carlo Ancelotti", "Pep Guardiola", "Alex Ferguson", "Zinedine Zidane"] },
+        { q: "What is the diameter of a football (soccer ball)?", correct: "22 cm", options: ["22 cm", "20 cm", "25 cm", "28 cm"] },
+        { q: "Which club has won the most FA Cups?", correct: "Arsenal", options: ["Arsenal", "Manchester United", "Chelsea", "Liverpool"] },
+        { q: "Who scored the first hat-trick in a World Cup final?", correct: "Geoff Hurst", options: ["Geoff Hurst", "Pele", "Zinedine Zidane", "Ronaldo"] },
+        { q: "Which country has the most World Cup appearances?", correct: "Brazil", options: ["Brazil", "Germany", "Italy", "Argentina"] },
+        { q: "What is the minimum number of players needed to start a football match?", correct: "7", options: ["7", "9", "10", "11"] },
+        { q: "Who won the 2023 FIFA Women's World Cup?", correct: "Spain", options: ["Spain", "England", "USA", "Sweden"] },
+        { q: "Which player has the most Premier League titles?", correct: "Ryan Giggs", options: ["Ryan Giggs", "Paul Scholes", "Gary Neville", "Steven Gerrard"] },
+        { q: "What is the name of the trophy awarded to UEFA Champions League winners?", correct: "European Champion Clubs' Cup", options: ["European Champion Clubs' Cup", "Champions League Trophy", "UEFA Cup", "European Trophy"] }
     ],
     Cricket: [
         { q: "How many balls are there in a standard over?", correct: "6", options: ["5", "6", "8", "10"] },
         { q: "Who won the 2011 ICC Cricket World Cup?", correct: "India", options: ["Sri Lanka", "India", "Australia", "England"] },
-        { q: "Who is known as the 'Little Master'?", correct: "Tendulkar", options: ["Gavaskar", "Kohli", "Tendulkar", "Ponting"] },
-        { q: "Who holds the record for the highest individual score in Test cricket?", correct: "Lara", options: ["Hayden", "Lara", "Sehwag", "Bradman"] },
-        { q: "Which country won the 2019 World Cup?", correct: "England", options: ["New Zealand", "India", "Australia", "England"] },
-        { q: "Who won the inaugural T20 World Cup in 2007?", correct: "India", options: ["Pakistan", "India", "Australia", "South Africa"] },
-        { q: "Who is known as 'The Wall' of Indian cricket?", correct: "Dravid", options: ["Tendulkar", "Dravid", "Laxman", "Ganguly"] },
-        { q: "Which bowler has the most wickets in Test history?", correct: "Muralitharan", options: ["Warne", "Anderson", "Muralitharan", "Kumble"] },
-        { q: "Which ground is known as the 'Home of Cricket'?", correct: "Lord's", options: ["MCG", "Eden Gardens", "Lord's", "The Oval"] },
-        { q: "Who won the IPL in 2023?", correct: "CSK", options: ["Mumbai Indians", "Gujarat Titans", "CSK", "RCB"] },
-        { q: "What is the length of a cricket pitch?", correct: "22 Yards", options: ["20 Yards", "22 Yards", "24 Yards", "18 Yards"] },
-        { q: "Who is known as 'Captain Cool'?", correct: "Dhoni", options: ["Kohli", "Dhoni", "Williamson", "Rohit"] },
-        { q: "Which team has won the most ODI World Cups?", correct: "Australia", options: ["India", "West Indies", "Australia", "England"] },
-        { q: "What is the maximum number of overs a bowler can bowl in an ODI?", correct: "10", options: ["5", "10", "12", "20"] },
-        { q: "Who hit 6 sixes in an over in the 2007 T20 World Cup?", correct: "Yuvraj", options: ["Gibbs", "Yuvraj", "Pollard", "Gayle"] },
-        { q: "Who is the 'Universe Boss'?", correct: "Gayle", options: ["Russell", "Gayle", "Pollard", "Bravo"] },
-        { q: "Which trophy is played for between England and Australia?", correct: "The Ashes", options: ["Border-Gavaskar", "The Ashes", "Chappell-Hadlee", "Wisden"] },
-        { q: "Who was the first batsman to score a double century in ODIs?", correct: "Tendulkar", options: ["Sehwag", "Rohit", "Tendulkar", "Guptill"] },
-        { q: "Which IPL team has won 5 titles (along with CSK)?", correct: "Mumbai Indians", options: ["KKR", "Mumbai Indians", "RCB", "SRH"] },
-        { q: "Who is the current captain of the Indian Test team (2024)?", correct: "Rohit", options: ["Kohli", "Rahane", "Rohit", "Gill"] },
-        { q: "Which country does Kane Williamson play for?", correct: "New Zealand", options: ["England", "Australia", "New Zealand", "South Africa"] },
-        { q: "Who has the most centuries in International Cricket?", correct: "Tendulkar", options: ["Kohli", "Ponting", "Tendulkar", "Kallis"] },
-        { q: "Which bowler is known as the 'Sultan of Swing'?", correct: "Wasim Akram", options: ["Waqar Younis", "Wasim Akram", "Anderson", "Steyn"] },
-        { q: "Who won the T20 World Cup in 2024?", correct: "India", options: ["South Africa", "India", "Australia", "England"] },
-        { q: "Which stadium is the largest cricket stadium in the world?", correct: "Narendra Modi Stadium", options: ["MCG", "Eden Gardens", "Narendra Modi Stadium", "Lord's"] },
-        { q: "Who is the fastest bowler in cricket history?", correct: "Shoaib Akhtar", options: ["Brett Lee", "Shoaib Akhtar", "Shaun Tait", "Starc"] },
-        { q: "Which team won the first ever Cricket World Cup in 1975?", correct: "West Indies", options: ["Australia", "England", "West Indies", "India"] },
-        { q: "Who is the only player to score 400 runs in a Test inning?", correct: "Lara", options: ["Hayden", "Lara", "Jayawardene", "Sehwag"] },
-        { q: "What does LBW stand for?", correct: "Leg Before Wicket", options: ["Leg By Wicket", "Leg Before Wicket", "Long Ball Wicket", "Left Bat Wicket"] },
-        { q: "Who is the leading run scorer in IPL history?", correct: "Kohli", options: ["Rohit", "Warner", "Kohli", "Dhawan"] },
-        { q: "Which country is known as the 'Proteas'?", correct: "South Africa", options: ["Zimbabwe", "South Africa", "New Zealand", "West Indies"] },
-        { q: "Who took 10 wickets in a single Test inning against India?", correct: "Ajaz Patel", options: ["Kumble", "Laker", "Ajaz Patel", "Warne"] },
-        { q: "Who is the current captain of Australia (Tests)?", correct: "Cummins", options: ["Smith", "Cummins", "Labuschagne", "Head"] },
-        { q: "Which format of cricket lasts for 5 days?", correct: "Test", options: ["ODI", "T20", "Test", "The Hundred"] },
-        { q: "Who won the Player of the Tournament in the 2011 World Cup?", correct: "Yuvraj", options: ["Tendulkar", "Yuvraj", "Zaheer", "Dhoni"] },
-        { q: "Who is the wicketkeeper for Rajasthan Royals?", correct: "Samson", options: ["Buttler", "Samson", "Pant", "Rahul"] },
-        { q: "Which bowler has the best bowling figures in an ODI match?", correct: "Chaminda Vaas", options: ["Murali", "Vaas", "Afridi", "Binny"] },
-        { q: "Who is nicknamed 'Hitman'?", correct: "Rohit", options: ["Kohli", "Dhoni", "Rohit", "Gayle"] },
-        { q: "Which country hosted the 2023 ODI World Cup?", correct: "India", options: ["England", "Australia", "India", "South Africa"] },
-        { q: "Who scored the fastest century in ODI cricket?", correct: "AB de Villiers", options: ["Afridi", "Anderson", "AB de Villiers", "Kohli"] },
-        { q: "Which player has the most sixes in International Cricket?", correct: "Rohit", options: ["Gayle", "Afridi", "Rohit", "McCullum"] },
-        { q: "Who is the coach of the Indian Cricket Team (2024)?", correct: "Gambhir", options: ["Dravid", "Shastri", "Gambhir", "Laxman"] },
-        { q: "Which team has never won the ODI World Cup?", correct: "South Africa", options: ["Pakistan", "Sri Lanka", "South Africa", "West Indies"] },
-        { q: "Who is the youngest player to score a Test century?", correct: "Ashraful", options: ["Tendulkar", "Mushtaq", "Ashraful", "Prithvi Shaw"] },
-        { q: "What is the term for scoring zero runs?", correct: "Duck", options: ["Egg", "Duck", "Nil", "Zero"] },
-        { q: "Who won the World Test Championship in 2023?", correct: "Australia", options: ["India", "New Zealand", "Australia", "England"] },
-        { q: "Which player is known as 'Mr. 360'?", correct: "AB de Villiers", options: ["Maxwell", "AB de Villiers", "Suryakumar", "Dilshan"] },
-        { q: "Who has the most stumpings in International Cricket?", correct: "Dhoni", options: ["Sangakkara", "Gilchrist", "Dhoni", "Boucher"] },
-        { q: "Which cricket ground is in Dharamshala?", correct: "HPCA Stadium", options: ["Wankhede", "HPCA Stadium", "Chepauk", "Kotla"] },
-        { q: "Who is the highest wicket taker for India in ODIs?", correct: "Kumble", options: ["Srinath", "Kumble", "Agarkar", "Zaheer"] }
+        { q: "Who is known as the 'Little Master'?", correct: "Sachin Tendulkar", options: ["Sunil Gavaskar", "Virat Kohli", "Sachin Tendulkar", "Ricky Ponting"] },
+        { q: "Which country won the first Cricket World Cup in 1975?", correct: "West Indies", options: ["West Indies", "Australia", "England", "India"] },
+        { q: "What is the highest individual score in Test cricket?", correct: "400*", options: ["400*", "375", "380", "390"] },
+        { q: "Who has taken the most wickets in Test cricket?", correct: "Muttiah Muralitharan", options: ["Muttiah Muralitharan", "Shane Warne", "James Anderson", "Anil Kumble"] },
+        { q: "Which team has won the most ODI World Cups?", correct: "Australia", options: ["Australia", "India", "West Indies", "England"] },
+        { q: "What is the nickname of the Australia cricket team?", correct: "The Baggy Greens", options: ["The Baggy Greens", "The Kangaroos", "The Aussies", "The Southern Stars"] },
+        { q: "Who scored the first double century in ODI cricket?", correct: "Sachin Tendulkar", options: ["Sachin Tendulkar", "Rohit Sharma", "Virender Sehwag", "Martin Guptill"] },
+        { q: "Which bowler has the best figures in a Test innings?", correct: "Jim Laker", options: ["Jim Laker", "Anil Kumble", "Muttiah Muralitharan", "Shane Warne"] },
+        { q: "Who won the 2023 ICC Cricket World Cup?", correct: "Australia", options: ["Australia", "India", "New Zealand", "England"] },
+        { q: "Which country invented cricket?", correct: "England", options: ["England", "Australia", "India", "West Indies"] },
+        { q: "What is the distance between the two sets of stumps?", correct: "22 yards", options: ["22 yards", "20 yards", "24 yards", "18 yards"] },
+        { q: "Who has scored the most runs in Test cricket?", correct: "Sachin Tendulkar", options: ["Sachin Tendulkar", "Ricky Ponting", "Jacques Kallis", "Rahul Dravid"] },
+        { q: "Which player has taken the first hat-trick in World Cup history?", correct: "Chetan Sharma", options: ["Chetan Sharma", "Wasim Akram", "Lasith Malinga", "Brett Lee"] },
+        { q: "What is the highest team total in ODI cricket?", correct: "498/4", options: ["498/4", "481/6", "444/3", "438/9"] },
+        { q: "Who is known as 'The Wall' in cricket?", correct: "Rahul Dravid", options: ["Rahul Dravid", "Steve Waugh", "Alastair Cook", "Hashim Amla"] },
+        { q: "Which country hosted the first T20 World Cup in 2007?", correct: "South Africa", options: ["South Africa", "England", "India", "West Indies"] },
+        { q: "Who won the first T20 World Cup?", correct: "India", options: ["India", "Pakistan", "Sri Lanka", "Australia"] },
+        { q: "What is the maximum number of overs in a Test match day?", correct: "90", options: ["90", "80", "100", "95"] },
+        { q: "Which bowler has the most wickets in ODI cricket?", correct: "Muttiah Muralitharan", options: ["Muttiah Muralitharan", "Wasim Akram", "Glenn McGrath", "Brett Lee"] },
+        { q: "Who is the only batsman to score 100 international centuries?", correct: "Sachin Tendulkar", options: ["Sachin Tendulkar", "Ricky Ponting", "Virat Kohli", "Kumar Sangakkara"] },
+        { q: "Which team has won the most T20 World Cups?", correct: "West Indies", options: ["West Indies", "India", "England", "Sri Lanka"] },
+        { q: "What is the width of a cricket bat?", correct: "4.25 inches", options: ["4.25 inches", "4 inches", "4.5 inches", "5 inches"] },
+        { q: "Who is known as 'The King' in cricket?", correct: "Virat Kohli", options: ["Virat Kohli", "MS Dhoni", "AB de Villiers", "Kane Williamson"] },
+        { q: "Which country won the 1992 Cricket World Cup?", correct: "Pakistan", options: ["Pakistan", "England", "New Zealand", "South Africa"] },
+        { q: "What is the highest partnership in Test cricket?", correct: "624", options: ["624", "576", "582", "610"] },
+        { q: "Who has taken the most catches in Test cricket?", correct: "Rahul Dravid", options: ["Rahul Dravid", "Jacques Kallis", "Mark Waugh", "Mahela Jayawardene"] },
+        { q: "Which player has the highest individual score in ODI cricket?", correct: "Rohit Sharma", options: ["Rohit Sharma", "Martin Guptill", "Virender Sehwag", "Chris Gayle"] },
+        { q: "What is the name of cricket's governing body?", correct: "International Cricket Council", options: ["International Cricket Council", "World Cricket Council", "Cricket Federation", "Global Cricket Board"] },
+        { q: "Who won the 2021 ICC T20 World Cup?", correct: "Australia", options: ["Australia", "New Zealand", "England", "Pakistan"] },
+        { q: "Which country has never won the Cricket World Cup?", correct: "South Africa", options: ["South Africa", "England", "Pakistan", "Sri Lanka"] },
+        { q: "Who is the only bowler to take 10 wickets in a Test innings?", correct: "Jim Laker", options: ["Jim Laker", "Anil Kumble", "Muttiah Muralitharan", "Shane Warne"] },
+        { q: "What is the weight of a cricket ball?", correct: "5.5 ounces", options: ["5.5 ounces", "5 ounces", "6 ounces", "5.75 ounces"] },
+        { q: "Which player has the most runs in ODI cricket?", correct: "Sachin Tendulkar", options: ["Sachin Tendulkar", "Ricky Ponting", "Kumar Sangakkara", "Virat Kohli"] },
+        { q: "Who won the 1999 Cricket World Cup?", correct: "Australia", options: ["Australia", "Pakistan", "South Africa", "New Zealand"] },
+        { q: "What is the minimum number of overs in a Test match?", correct: "No minimum", options: ["No minimum", "50", "60", "90"] },
+        { q: "Which country has the most Test match wins?", correct: "Australia", options: ["Australia", "England", "South Africa", "India"] },
+        { q: "Who is known as 'The White Lightning'?", correct: "Allan Donald", options: ["Allan Donald", "Brett Lee", "Shoaib Akhtar", "Dale Steyn"] },
+        { q: "What is the highest successful run chase in Test cricket?", correct: "418", options: ["418", "404", "387", "369"] },
+        { q: "Which player has scored the fastest century in ODI cricket?", correct: "AB de Villiers", options: ["AB de Villiers", "Corey Anderson", "Shahid Afridi", "Glenn Maxwell"] },
+        { q: "Who won the first Women's Cricket World Cup in 1973?", correct: "England", options: ["England", "Australia", "New Zealand", "West Indies"] },
+        { q: "What is the distance of the boundary in international cricket?", correct: "Minimum 65 yards", options: ["Minimum 65 yards", "Minimum 60 yards", "Minimum 70 yards", "Minimum 75 yards"] },
+        { q: "Which country won the 2007 T20 World Cup?", correct: "India", options: ["India", "Pakistan", "Australia", "South Africa"] },
+        { q: "Who has the most stumpings in ODI cricket?", correct: "Kumar Sangakkara", options: ["Kumar Sangakkara", "MS Dhoni", "Moin Khan", "Adam Gilchrist"] },
+        { q: "What is the height of the stumps?", correct: "28 inches", options: ["28 inches", "26 inches", "30 inches", "32 inches"] },
+        { q: "Which team has won the most Ashes series?", correct: "Australia", options: ["Australia", "England", "Draw", "Neither"] },
+        { q: "Who scored the first T20 international century?", correct: "Chris Gayle", options: ["Chris Gayle", "Brendon McCullum", "Tillakaratne Dilshan", "Rohit Sharma"] },
+        { q: "What is the maximum number of fielders allowed outside the 30-yard circle in powerplay?", correct: "2", options: ["2", "3", "4", "5"] },
+        { q: "Which country hosted the 2015 Cricket World Cup?", correct: "Australia & New Zealand", options: ["Australia & New Zealand", "England", "India", "South Africa"] }
     ],
     NBA: [
         { q: "Who is the silhouette on the NBA logo?", correct: "Jerry West", options: ["Michael Jordan", "Kobe Bryant", "Jerry West", "LeBron James"] },
         { q: "Who has scored the most points in NBA history?", correct: "LeBron James", options: ["Kareem Abdul-Jabbar", "LeBron James", "Karl Malone", "Kobe Bryant"] },
         { q: "How many championships did the Chicago Bulls win in the 1990s?", correct: "6", options: ["4", "5", "6", "7"] },
-        { q: "Who was known as 'The Black Mamba'?", correct: "Kobe Bryant", options: ["Jordan", "Shaq", "Kobe Bryant", "Iverson"] },
-        { q: "Who scored 100 points in a single game?", correct: "Wilt Chamberlain", options: ["Kobe Bryant", "Wilt Chamberlain", "Jordan", "LeBron"] },
-        { q: "Which team plays in San Francisco?", correct: "Warriors", options: ["Lakers", "Clippers", "Warriors", "Kings"] },
-        { q: "Who won the 2023 NBA Championship?", correct: "Nuggets", options: ["Heat", "Celtics", "Nuggets", "Bucks"] },
-        { q: "Who has the most career assists?", correct: "John Stockton", options: ["Magic Johnson", "Chris Paul", "John Stockton", "Kidd"] },
-        { q: "Which is the only Canadian team in the NBA?", correct: "Toronto Raptors", options: ["Vancouver Grizzlies", "Montreal Heat", "Toronto Raptors", "Ottawa Senators"] },
-        { q: "Who is nicknamed 'The Greek Freak'?", correct: "Giannis", options: ["Jokic", "Doncic", "Giannis", "Porzingis"] },
-        { q: "Which team drafted Michael Jordan?", correct: "Bulls", options: ["Blazers", "Bulls", "Rockets", "Knicks"] },
-        { q: "How many quarters are in an NBA game?", correct: "4", options: ["2", "3", "4", "5"] },
-        { q: "Which team has the most NBA championships (tied)?", correct: "Lakers & Celtics", options: ["Bulls & Lakers", "Lakers & Celtics", "Celtics & Bulls", "Warriors & Spurs"] },
-        { q: "Who is the shortest player to ever play in the NBA?", correct: "Muggsy Bogues", options: ["Spud Webb", "Muggsy Bogues", "Earl Boykins", "Isaiah Thomas"] },
-        { q: "What is the regulation height of the basket?", correct: "10 feet", options: ["9 feet", "10 feet", "11 feet", "12 feet"] },
-        { q: "Which player has the most MVP awards?", correct: "Kareem", options: ["Jordan", "LeBron", "Kareem", "Russell"] },
-        { q: "Who is the 'Splash Brothers' duo?", correct: "Curry & Thompson", options: ["Jordan & Pippen", "Curry & Thompson", "LeBron & Wade", "Shaq & Kobe"] },
-        { q: "Which team does Luka Doncic play for?", correct: "Mavericks", options: ["Nuggets", "Suns", "Mavericks", "Spurs"] },
-        { q: "Who won the 2024 NBA MVP?", correct: "Jokic", options: ["Embiid", "Giannis", "Jokic", "SGA"] },
-        { q: "Where is the Basketball Hall of Fame located?", correct: "Springfield, MA", options: ["Chicago, IL", "New York, NY", "Springfield, MA", "Los Angeles, CA"] },
-        { q: "Who won the 2024 NBA Championship?", correct: "Celtics", options: ["Mavericks", "Celtics", "Timberwolves", "Nuggets"] },
-        { q: "Which player has the most triple-doubles in history?", correct: "Westbrook", options: ["Robertson", "Westbrook", "Jokic", "Magic"] },
-        { q: "Which team plays at Madison Square Garden?", correct: "Knicks", options: ["Nets", "Knicks", "Celtics", "76ers"] },
-        { q: "Who is the all-time leader in 3-pointers made?", correct: "Curry", options: ["Allen", "Reggie Miller", "Curry", "Harden"] },
-        { q: "Which player was nicknamed 'The Dream'?", correct: "Hakeem", options: ["Shaq", "Hakeem", "Robinson", "Ewing"] },
-        { q: "Who won the Rookie of the Year in 2024?", correct: "Wembanyama", options: ["Holmgren", "Wembanyama", "Miller", "Henderson"] },
-        { q: "Which team had the 'Showtime' era?", correct: "Lakers", options: ["Celtics", "Pistons", "Lakers", "Bulls"] },
-        { q: "Who is the commissioner of the NBA?", correct: "Adam Silver", options: ["David Stern", "Adam Silver", "Roger Goodell", "Rob Manfred"] },
-        { q: "How many players are on the court per team?", correct: "5", options: ["4", "5", "6", "7"] },
-        { q: "Which player famously wore number 23 for the Bulls?", correct: "Jordan", options: ["Pippen", "Rodman", "Jordan", "Rose"] },
-        { q: "Which team did Shaquille O'Neal win his first ring with?", correct: "Lakers", options: ["Magic", "Lakers", "Heat", "Suns"] },
-        { q: "Who is the coach of the Golden State Warriors?", correct: "Steve Kerr", options: ["Popovich", "Steve Kerr", "Spoelstra", "Rivers"] },
-        { q: "Which player is known as 'The King'?", correct: "LeBron", options: ["Jordan", "Kobe", "LeBron", "Magic"] },
-        { q: "What team is from San Antonio?", correct: "Spurs", options: ["Rockets", "Mavericks", "Spurs", "Thunder"] },
-        { q: "Who won the first ever NBA championship?", correct: "Warriors", options: ["Celtics", "Lakers", "Knicks", "Warriors"] },
-        { q: "Which player has the highest career PPG average?", correct: "Jordan", options: ["Chamberlain", "Jordan", "LeBron", "Durant"] },
-        { q: "Who is the mascot of the Chicago Bulls?", correct: "Benny", options: ["Rocky", "Benny", "Clutch", "Hugo"] },
-        { q: "Which team plays in Miami?", correct: "Heat", options: ["Magic", "Heat", "Hawks", "Hornets"] },
-        { q: "Who was the first unanimous MVP?", correct: "Curry", options: ["Jordan", "LeBron", "Curry", "Shaq"] },
-        { q: "Which player is nicknamed 'The Claw'?", correct: "Kawhi", options: ["George", "Kawhi", "Butler", "Tatum"] },
-        { q: "Who holds the record for most rebounds in a game?", correct: "Chamberlain", options: ["Russell", "Chamberlain", "Rodman", "Howard"] },
-        { q: "Which team has a clover as its logo?", correct: "Celtics", options: ["Bucks", "Celtics", "Hornets", "Jazz"] },
-        { q: "Who won the 2011 NBA Championship?", correct: "Mavericks", options: ["Heat", "Mavericks", "Lakers", "Thunder"] },
-        { q: "Which player is known as 'The Answer'?", correct: "Iverson", options: ["Kobe", "T-Mac", "Iverson", "Carter"] },
-        { q: "Who is the all-time leader in blocks?", correct: "Hakeem", options: ["Mutombo", "Hakeem", "Kareem", "Eaton"] },
-        { q: "Which team plays in Denver?", correct: "Nuggets", options: ["Jazz", "Suns", "Nuggets", "Thunder"] },
-        { q: "Who was the #1 draft pick in 2003?", correct: "LeBron", options: ["Darko", "Melo", "LeBron", "Wade"] },
-        { q: "How long is a shot clock in the NBA?", correct: "24 seconds", options: ["20 seconds", "24 seconds", "30 seconds", "35 seconds"] },
-        { q: "Which player scored 81 points in a game?", correct: "Kobe", options: ["Jordan", "Kobe", "Booker", "Thompson"] },
-        { q: "Who is the coach of the San Antonio Spurs?", correct: "Popovich", options: ["Kerr", "Popovich", "Carlisle", "Thibodeau"] }
+        { q: "Which team has won the most NBA championships?", correct: "Boston Celtics", options: ["Boston Celtics", "Los Angeles Lakers", "Chicago Bulls", "Golden State Warriors"] },
+        { q: "Who is known as 'The Greek Freak'?", correct: "Giannis Antetokounmpo", options: ["Giannis Antetokounmpo", "Luka Doncic", "Nikola Jokic", "Stephen Curry"] },
+        { q: "Which player has the most MVP awards?", correct: "Kareem Abdul-Jabbar", options: ["Kareem Abdul-Jabbar", "Michael Jordan", "LeBron James", "Bill Russell"] },
+        { q: "What is the diameter of a basketball hoop?", correct: "18 inches", options: ["18 inches", "16 inches", "20 inches", "22 inches"] },
+        { q: "Which team drafted Michael Jordan?", correct: "Chicago Bulls", options: ["Chicago Bulls", "Portland Trail Blazers", "Houston Rockets", "Seattle SuperSonics"] },
+        { q: "Who won the first NBA championship?", correct: "Philadelphia Warriors", options: ["Philadelphia Warriors", "Boston Celtics", "Minneapolis Lakers", "New York Knicks"] },
+        { q: "Which player has the most triple-doubles in NBA history?", correct: "Russell Westbrook", options: ["Russell Westbrook", "Oscar Robertson", "Magic Johnson", "LeBron James"] },
+        { q: "What is the height of the basketball rim?", correct: "10 feet", options: ["10 feet", "9 feet", "11 feet", "10.5 feet"] },
+        { q: "Who won the 2023 NBA championship?", correct: "Denver Nuggets", options: ["Denver Nuggets", "Miami Heat", "Los Angeles Lakers", "Boston Celtics"] },
+        { q: "Which player has the most assists in NBA history?", correct: "John Stockton", options: ["John Stockton", "Jason Kidd", "Steve Nash", "Magic Johnson"] },
+        { q: "What is the three-point line distance in the NBA?", correct: "23.75 feet", options: ["23.75 feet", "22 feet", "24 feet", "25 feet"] },
+        { q: "Who is the shortest player in NBA history?", correct: "Muggsy Bogues", options: ["Muggsy Bogues", "Earl Boykins", "Nate Robinson", "Spud Webb"] },
+        { q: "Which team has the longest winning streak in NBA history?", correct: "Los Angeles Lakers", options: ["Los Angeles Lakers", "Golden State Warriors", "Miami Heat", "Chicago Bulls"] },
+        { q: "Who is known as 'The Black Mamba'?", correct: "Kobe Bryant", options: ["Kobe Bryant", "Michael Jordan", "Allen Iverson", "Dwyane Wade"] },
+        { q: "What year was the NBA founded?", correct: "1946", options: ["1946", "1950", "1949", "1960"] },
+        { q: "Which player has the most rebounds in NBA history?", correct: "Wilt Chamberlain", options: ["Wilt Chamberlain", "Bill Russell", "Kareem Abdul-Jabbar", "Tim Duncan"] },
+        { q: "Who won the first NBA MVP award?", correct: "Bob Pettit", options: ["Bob Pettit", "Bill Russell", "Wilt Chamberlain", "Oscar Robertson"] },
+        { q: "What is the duration of an NBA quarter?", correct: "12 minutes", options: ["12 minutes", "10 minutes", "15 minutes", "8 minutes"] },
+        { q: "Which team has the most regular season wins?", correct: "Los Angeles Lakers", options: ["Los Angeles Lakers", "Boston Celtics", "San Antonio Spurs", "Chicago Bulls"] },
+        { q: "Who is the only player to average a triple-double for a season?", correct: "Russell Westbrook", options: ["Russell Westbrook", "Oscar Robertson", "Magic Johnson", "LeBron James"] },
+        { q: "What is the 'Larry O'Brien Championship Trophy' awarded for?", correct: "NBA Championship", options: ["NBA Championship", "MVP", "Finals MVP", "Rookie of the Year"] },
+        { q: "Who is the all-time leader in blocks?", correct: "Hakeem Olajuwon", options: ["Hakeem Olajuwon", "Dikembe Mutombo", "Kareem Abdul-Jabbar", "Tim Duncan"] },
+        { q: "Which player has won the most scoring titles?", correct: "Michael Jordan", options: ["Michael Jordan", "Kevin Durant", "Allen Iverson", "Kobe Bryant"] },
+        { q: "What is the NBA's highest individual game score?", correct: "100", options: ["100", "81", "73", "69"] },
+        { q: "Who is the only player to win MVP with two different teams?", correct: "LeBron James", options: ["LeBron James", "Kareem Abdul-Jabbar", "Michael Jordan", "Stephen Curry"] },
+        { q: "Which team has the worst season record in NBA history?", correct: "Philadelphia 76ers", options: ["Philadelphia 76ers", "Charlotte Bobcats", "Minnesota Timberwolves", "Cleveland Cavaliers"] },
+        { q: "Who is known as 'The Dream'?", correct: "Hakeem Olajuwon", options: ["Hakeem Olajuwon", "Shaquille O'Neal", "David Robinson", "Patrick Ewing"] },
+        { q: "What is the shot clock duration in the NBA?", correct: "24 seconds", options: ["24 seconds", "30 seconds", "20 seconds", "14 seconds"] },
+        { q: "Which player has the highest career free throw percentage?", correct: "Steve Nash", options: ["Steve Nash", "Stephen Curry", "Ray Allen", "Mark Price"] },
+        { q: "Who won the 1992 NBA Finals MVP?", correct: "Michael Jordan", options: ["Michael Jordan", "Scottie Pippen", "Clyde Drexler", "Magic Johnson"] },
+        { q: "What is the 'Dean Smith Award' also known as?", correct: "NCAA Player of the Year", options: ["NCAA Player of the Year", "NBA Rookie of the Year", "NBA Coach of the Year", "NBA Sportsmanship Award"] },
+        { q: "Which player has the most steals in NBA history?", correct: "John Stockton", options: ["John Stockton", "Jason Kidd", "Michael Jordan", "Gary Payton"] },
+        { q: "Who is the youngest player to score 10,000 points?", correct: "LeBron James", options: ["LeBron James", "Kobe Bryant", "Kevin Durant", "Carmelo Anthony"] },
+        { q: "What is the 'Hack-a-Shaq' strategy?", correct: "Intentional fouling of poor free-throw shooters", options: ["Intentional fouling of poor free-throw shooters", "Double-teaming a star player", "Fast break offense", "Zone defense"] },
+        { q: "Which team has the most consecutive playoff appearances?", correct: "San Antonio Spurs", options: ["San Antonio Spurs", "Boston Celtics", "Los Angeles Lakers", "Portland Trail Blazers"] },
+        { q: "Who is the only player to win DPOY and MVP in same season?", correct: "Michael Jordan", options: ["Michael Jordan", "Hakeem Olajuwon", "David Robinson", "Kevin Garnett"] },
+        { q: "What is the 'Princeton Offense' in basketball?", correct: "A motion offense with backdoor cuts", options: ["A motion offense with backdoor cuts", "Fast break system", "Isolation plays", "Pick and roll"] },
+        { q: "Which player has the most NBA Finals appearances?", correct: "Bill Russell", options: ["Bill Russell", "Sam Jones", "LeBron James", "Magic Johnson"] },
+        { q: "Who won the 2016 NBA Finals?", correct: "Cleveland Cavaliers", options: ["Cleveland Cavaliers", "Golden State Warriors", "San Antonio Spurs", "Oklahoma City Thunder"] },
+        { q: "What is the 'Euro step' in basketball?", correct: "A two-step move to avoid defenders", options: ["A two-step move to avoid defenders", "A three-point shot", "A defensive stance", "A type of pass"] },
+        { q: "Which player has the most All-Star selections?", correct: "LeBron James", options: ["LeBron James", "Kareem Abdul-Jabbar", "Kobe Bryant", "Michael Jordan"] },
+        { q: "Who is the only undrafted player to win MVP?", correct: "Moses Malone", options: ["Moses Malone", "Ben Wallace", "Chauncey Billups", "Dennis Rodman"] },
+        { q: "What is the 'Triangle Offense' associated with?", correct: "Phil Jackson", options: ["Phil Jackson", "Gregg Popovich", "Pat Riley", "Red Auerbach"] },
+        { q: "Which team has the most 70+ win seasons?", correct: "Golden State Warriors", options: ["Golden State Warriors", "Chicago Bulls", "Boston Celtics", "Los Angeles Lakers"] },
+        { q: "Who is the all-time leader in three-pointers made?", correct: "Stephen Curry", options: ["Stephen Curry", "Ray Allen", "Reggie Miller", "James Harden"] },
+        { q: "What is the 'Rookie Scale' in the NBA?", correct: "Salary structure for first-round picks", options: ["Salary structure for first-round picks", "Draft lottery system", "Age limit rule", "Trade exception"] }
     ],
     Tennis: [
         { q: "Where is Wimbledon played?", correct: "London", options: ["Paris", "London", "New York", "Melbourne"] },
-        { q: "Who has won the most Grand Slam titles (Men)?", correct: "Djokovic", options: ["Nadal", "Federer", "Djokovic", "Sampras"] },
-        { q: "Who is known as the 'King of Clay'?", correct: "Nadal", options: ["Djokovic", "Federer", "Nadal", "Borg"] },
-        { q: "Which is the oldest Grand Slam tournament?", correct: "Wimbledon", options: ["US Open", "French Open", "Wimbledon", "Australian Open"] },
-        { q: "What surface is the US Open played on?", correct: "Hard Court", options: ["Clay", "Grass", "Hard Court", "Carpet"] },
-        { q: "Who is known as the 'Swiss Maestro'?", correct: "Federer", options: ["Wawrinka", "Federer", "Hingis", "Thiem"] },
-        { q: "Who won the Golden Slam in 1988?", correct: "Steffi Graf", options: ["Serena Williams", "Steffi Graf", "Navratilova", "Evert"] },
-        { q: "What is the venue for the French Open?", correct: "Roland Garros", options: ["Wimbledon", "Flushing Meadows", "Roland Garros", "Melbourne Park"] },
-        { q: "Who was the youngest winner of Wimbledon (Men)?", correct: "Becker", options: ["Nadal", "Becker", "Chang", "Wilander"] },
-        { q: "In which month is the Australian Open usually held?", correct: "January", options: ["January", "May", "July", "September"] },
-        { q: "How many sets must a man win in a Grand Slam match?", correct: "3", options: ["2", "3", "4", "5"] },
-        { q: "Which sisters have dominated women's tennis for years?", correct: "Williams Sisters", options: ["Pliskova Sisters", "Williams Sisters", "Fernandez Sisters", "Raducanu Sisters"] },
-        { q: "What does 'Love' mean in tennis scoring?", correct: "Zero", options: ["One", "Zero", "Deuce", "Advantage"] },
-        { q: "Which country hosts the Davis Cup?", correct: "Varies (International)", options: ["USA", "UK", "France", "Varies (International)"] },
-        { q: "Who is the only British man to win Wimbledon in the modern era (before 2020)?", correct: "Andy Murray", options: ["Tim Henman", "Andy Murray", "Greg Rusedski", "Cameron Norrie"] },
-        { q: "What is the term for a score of 40-40?", correct: "Deuce", options: ["Tie", "Draw", "Deuce", "Match Point"] },
-        { q: "Who won the 2023 US Open (Women)?", correct: "Gauff", options: ["Sabalenka", "Swiatek", "Gauff", "Jabeur"] },
-        { q: "Which Grand Slam is played on clay?", correct: "French Open", options: ["US Open", "Wimbledon", "French Open", "Australian Open"] },
-        { q: "Who holds the record for the fastest serve (ATP)?", correct: "Isner", options: ["Roddick", "Isner", "Karlovic", "Groth"] },
-        { q: "How many players are on a court in a doubles match?", correct: "4", options: ["2", "3", "4", "6"] },
-        { q: "Who holds the record for most Grand Slam titles (Women - Open Era)?", correct: "Serena Williams", options: ["Graf", "Serena Williams", "Navratilova", "Evert"] },
-        { q: "What is a serve that is not touched by the receiver called?", correct: "Ace", options: ["Ace", "Winner", "Smash", "Volley"] },
-        { q: "Which country is Novak Djokovic from?", correct: "Serbia", options: ["Croatia", "Serbia", "Russia", "Poland"] },
-        { q: "Who won Wimbledon 5 times in a row (1976-1980)?", correct: "Borg", options: ["McEnroe", "Borg", "Connors", "Laver"] },
-        { q: "What is the final point of a game called?", correct: "Game Point", options: ["Match Point", "Set Point", "Game Point", "Break Point"] },
-        { q: "Who is the current World No. 1 (Men - 2024)?", correct: "Sinner", options: ["Alcaraz", "Djokovic", "Sinner", "Medvedev"] },
-        { q: "Which tournament is played on grass?", correct: "Wimbledon", options: ["French Open", "US Open", "Wimbledon", "Australian Open"] },
-        { q: "What color are the clay courts at Roland Garros?", correct: "Red", options: ["Green", "Blue", "Red", "Grey"] },
-        { q: "Who won the Men's Singles Gold Medal at the 2024 Olympics?", correct: "Djokovic", options: ["Alcaraz", "Djokovic", "Nadal", "Zverev"] },
-        { q: "Which player has the most weeks at World No. 1 (Men)?", correct: "Djokovic", options: ["Federer", "Sampras", "Djokovic", "Nadal"] },
-        { q: "Who is known as 'The Rocket'?", correct: "Rod Laver", options: ["Federer", "Rod Laver", "Sampras", "Agassi"] },
-        { q: "What is the maximum number of sets in a women's Grand Slam match?", correct: "3", options: ["2", "3", "5", "4"] },
-        { q: "Which country does Carlos Alcaraz represent?", correct: "Spain", options: ["Argentina", "Spain", "Mexico", "Italy"] },
-        { q: "Who was the first unseeded player to win Wimbledon (Men)?", correct: "Ivanisevic", options: ["Becker", "Ivanisevic", "Stich", "Cash"] },
-        { q: "What is a score of 40-30 called?", correct: "Game Point", options: ["Break Point", "Game Point", "Set Point", "Deuce"] },
-        { q: "Who is the only player to achieve a Golden Slam?", correct: "Steffi Graf", options: ["Serena", "Graf", "Navratilova", "Agassi"] },
-        { q: "Which surface is the fastest?", correct: "Grass", options: ["Clay", "Hard", "Grass", "Carpet"] },
-        { q: "Who won the 2024 Wimbledon Men's Singles?", correct: "Alcaraz", options: ["Djokovic", "Alcaraz", "Sinner", "Medvedev"] },
-        { q: "How many bounces are allowed before returning the ball?", correct: "1", options: ["1", "2", "3", "0"] },
-        { q: "Who is the most successful women's doubles pair?", correct: "Navratilova & Shriver", options: ["Williams Sisters", "Navratilova & Shriver", "Hingis & Mirza", "Black & Huber"] },
-        { q: "What is the tie-break score limit in the final set of most Slams now?", correct: "10 points", options: ["7 points", "10 points", "12 points", "No Tie-break"] },
-        { q: "Which player has won the most French Open titles?", correct: "Nadal", options: ["Borg", "Nadal", "Federer", "Lendl"] },
-        { q: "Who is nicknamed 'Stan the Man'?", correct: "Wawrinka", options: ["Smith", "Wawrinka", "Edberg", "Murray"] },
-        { q: "Which country hosts the Australian Open?", correct: "Australia", options: ["USA", "UK", "Australia", "France"] },
-        { q: "What is the name of the main court at the US Open?", correct: "Arthur Ashe", options: ["Rod Laver", "Philippe Chatrier", "Arthur Ashe", "Centre Court"] },
-        { q: "Who won the 2004 Wimbledon title at age 17?", correct: "Sharapova", options: ["Williams", "Sharapova", "Hingis", "Davenport"] },
-        { q: "Which shot is hit before the ball bounces?", correct: "Volley", options: ["Smash", "Volley", "Drive", "Lob"] },
-        { q: "Who is the top Polish female tennis player?", correct: "Swiatek", options: ["Radwanska", "Swiatek", "Linette", "Frich"] },
-        { q: "What is the Hawk-Eye system used for?", correct: "Line Calls", options: ["Score Keeping", "Line Calls", "Serve Speed", "Player Stats"] },
-        { q: "Who has the most career aces (Men)?", correct: "Isner", options: ["Karlovic", "Isner", "Federer", "Roddick"] }
+        { q: "Who has won the most Grand Slam titles (Men)?", correct: "Novak Djokovic", options: ["Rafael Nadal", "Roger Federer", "Novak Djokovic", "Pete Sampras"] },
+        { q: "Who is known as the 'King of Clay'?", correct: "Rafael Nadal", options: ["Novak Djokovic", "Roger Federer", "Rafael Nadal", "Bjorn Borg"] },
+        { q: "Which surface is the Australian Open played on?", correct: "Hard court", options: ["Hard court", "Clay", "Grass", "Carpet"] },
+        { q: "Who has the most Wimbledon titles?", correct: "Roger Federer", options: ["Roger Federer", "Pete Sampras", "Novak Djokovic", "Bjorn Borg"] },
+        { q: "What is a 'Golden Slam' in tennis?", correct: "Winning all four Grand Slams and Olympic gold in a year", options: ["Winning all four Grand Slams and Olympic gold in a year", "Winning all Masters titles", "Winning Wimbledon 5 times", "Winning all Grand Slams on different surfaces"] },
+        { q: "Which player has the fastest serve recorded?", correct: "Sam Groth", options: ["Sam Groth", "Andy Roddick", "Ivo Karlovic", "John Isner"] },
+        { q: "Who won the first US Open?", correct: "Richard Sears", options: ["Richard Sears", "Bill Tilden", "Rod Laver", "Jimmy Connors"] },
+        { q: "What is the term for a score of 40-40?", correct: "Deuce", options: ["Deuce", "Advantage", "Game point", "Set point"] },
+        { q: "Which country has won the most Davis Cups?", correct: "United States", options: ["United States", "Australia", "France", "Spain"] },
+        { q: "Who is the youngest Grand Slam champion?", correct: "Martina Hingis", options: ["Martina Hingis", "Monica Seles", "Serena Williams", "Steffi Graf"] },
+        { q: "What is the 'Big Three' in tennis?", correct: "Federer, Nadal, Djokovic", options: ["Federer, Nadal, Djokovic", "Sampras, Agassi, Courier", "McEnroe, Borg, Connors", "Laver, Rosewall, Emerson"] },
+        { q: "Which Grand Slam tournament uses a tiebreak in the final set?", correct: "US Open", options: ["US Open", "French Open", "Wimbledon", "Australian Open"] },
+        { q: "Who has the most consecutive weeks at World No. 1?", correct: "Roger Federer", options: ["Roger Federer", "Novak Djokovic", "Pete Sampras", "Jimmy Connors"] },
+        { q: "What is a 'bagel' in tennis?", correct: "Winning a set 6-0", options: ["Winning a set 6-0", "Winning a match without losing a game", "A double fault", "A type of serve"] },
+        { q: "Which surface is the French Open played on?", correct: "Clay", options: ["Clay", "Grass", "Hard court", "Carpet"] },
+        { q: "Who won the 'Battle of the Sexes' in 1973?", correct: "Billie Jean King", options: ["Billie Jean King", "Bobby Riggs", "Margaret Court", "Chris Evert"] },
+        { q: "What is the term for winning all four Grand Slams in a calendar year?", correct: "Calendar Grand Slam", options: ["Calendar Grand Slam", "Career Grand Slam", "Golden Slam", "Boxed Set"] },
+        { q: "Who has the most Australian Open titles?", correct: "Novak Djokovic", options: ["Novak Djokovic", "Roy Emerson", "Roger Federer", "Andre Agassi"] },
+        { q: "What is 'Hawk-Eye' technology used for?", correct: "Line calling challenges", options: ["Line calling challenges", "Player tracking", "Speed measurement", "Injury detection"] },
+        { q: "Which player has won all nine Masters 1000 tournaments?", correct: "Novak Djokovic", options: ["Novak Djokovic", "Roger Federer", "Rafael Nadal", "Andy Murray"] },
+        { q: "What is a 'let' in tennis?", correct: "A serve that touches the net but lands in", options: ["A serve that touches the net but lands in", "A fault", "A double fault", "A net cord point"] },
+        { q: "Who has the most French Open titles?", correct: "Rafael Nadal", options: ["Rafael Nadal", "Bjorn Borg", "Roger Federer", "Novak Djokovic"] },
+        { q: "What is the 'Laver Cup'?", correct: "Team competition between Europe and World", options: ["Team competition between Europe and World", "A Grand Slam tournament", "A charity event", "A junior tournament"] },
+        { q: "Who is the oldest Grand Slam champion?", correct: "Ken Rosewall", options: ["Ken Rosewall", "Roger Federer", "Novak Djokovic", "Andre Agassi"] },
+        { q: "What is a 'walkover' in tennis?", correct: "A match won without playing due to opponent withdrawal", options: ["A match won without playing due to opponent withdrawal", "A quick victory", "A retirement", "A default"] },
+        { q: "Which player has the most Grand Slam titles (Women)?", correct: "Margaret Court", options: ["Margaret Court", "Serena Williams", "Steffi Graf", "Martina Navratilova"] },
+        { q: "What is the term for a score of 15-0?", correct: "Fifteen-Love", options: ["Fifteen-Love", "Fifteen-Zero", "One-Zero", "First point"] },
+        { q: "Who won the first Wimbledon tournament?", correct: "Spencer Gore", options: ["Spencer Gore", "William Renshaw", "Rod Laver", "Bjorn Borg"] },
+        { q: "What is the 'Fed Cup' now called?", correct: "Billie Jean King Cup", options: ["Billie Jean King Cup", "WTA Cup", "Women's Davis Cup", "International Cup"] },
+        { q: "Which player has the most ATP Masters 1000 titles?", correct: "Novak Djokovic", options: ["Novak Djokovic", "Rafael Nadal", "Roger Federer", "Andy Murray"] },
+        { q: "What is a 'double bagel'?", correct: "Winning a match 6-0, 6-0", options: ["Winning a match 6-0, 6-0", "Winning two sets 6-0", "Winning two tournaments consecutively", "Two double faults in a row"] },
+        { q: "Who is the only player to achieve the 'Golden Slam'?", correct: "Steffi Graf", options: ["Steffi Graf", "Serena Williams", "Margaret Court", "Martina Navratilova"] },
+        { q: "What is the 'ATP Finals'?", correct: "Year-end championship for top 8 players", options: ["Year-end championship for top 8 players", "A Grand Slam tournament", "A team competition", "A junior tournament"] },
+        { q: "Which country has produced the most Grand Slam champions?", correct: "United States", options: ["United States", "Australia", "Spain", "Switzerland"] },
+        { q: "What is an 'ace' in tennis?", correct: "A serve that is not touched by opponent", options: ["A serve that is not touched by opponent", "A winning shot", "A drop shot winner", "A volley winner"] },
+        { q: "Who has won the most WTA titles?", correct: "Martina Navratilova", options: ["Martina Navratilova", "Chris Evert", "Steffi Graf", "Serena Williams"] },
+        { q: "What is the term for breaking serve twice in a set?", correct: "Double break", options: ["Double break", "Break back", "Service break", "Hold break"] },
+        { q: "Which player has the longest winning streak?", correct: "Novak Djokovic", options: ["Novak Djokovic", "Roger Federer", "Rafael Nadal", "John McEnroe"] },
+        { q: "What is a 'chip and charge'?", correct: "Hitting a slice approach shot and moving to net", options: ["Hitting a slice approach shot and moving to net", "A drop shot and lob combination", "A double fault strategy", "A baseline rally tactic"] },
+        { q: "Who has won the most mixed doubles Grand Slams?", correct: "Margaret Court", options: ["Margaret Court", "Martina Navratilova", "Billie Jean King", "Serena Williams"] },
+        { q: "What is the 'ITF'?", correct: "International Tennis Federation", options: ["International Tennis Federation", "International Tennis Forum", "International Tennis Foundation", "International Tennis Fund"] },
+        { q: "Which player has won Grand Slams as a teenager and in their 30s?", correct: "Roger Federer", options: ["Roger Federer", "Rafael Nadal", "Novak Djokovic", "Pete Sampras"] },
+        { q: "What is a 'tweener'?", correct: "A between-the-legs shot", options: ["A between-the-legs shot", "A drop shot", "A lob", "A volley"] },
+        { q: "Who is the only player to win all four Grand Slams on three surfaces?", correct: "Novak Djokovic", options: ["Novak Djokovic", "Roger Federer", "Rafael Nadal", "Andre Agassi"] },
+        { q: "What is the 'Next Gen ATP Finals'?", correct: "Tournament for top 21-and-under players", options: ["Tournament for top 21-and-under players", "A Grand Slam qualifier", "A doubles tournament", "A charity event"] },
+        { q: "Which player has the most Olympic gold medals?", correct: "Venus Williams", options: ["Venus Williams", "Serena Williams", "Steffi Graf", "Rafael Nadal"] },
+        { q: "What is a 'moonball'?", correct: "A very high defensive lob", options: ["A very high defensive lob", "A powerful serve", "A drop shot", "A volley"] },
+        { q: "Who has won the most consecutive Grand Slam matches?", correct: "Don Budge", options: ["Don Budge", "Rod Laver", "Roger Federer", "Novak Djokovic"] },
+        { q: "What is the 'WTA Tour'?", correct: "Professional tennis tour for women", options: ["Professional tennis tour for women", "A junior tournament", "A charity event", "A men's tournament"] }
     ]
 };
 
@@ -1090,32 +1098,65 @@ function createScorePopup() {
 }
 
 // ==================== AI QUESTION GENERATION ====================
+// ==================== EXPANDED SYMBOLIC AI ENGINE DATABASE ====================
 const sportsOntology = {
     Football: {
         entities: [
             { name: "Lionel Messi", team: "Inter Miami", country: "Argentina", position: "Forward", league: "MLS" },
-            { name: "Cristiano Ronaldo", team: "Al Nassr", country: "Portugal", position: "Forward", league: "Saudi Pro League" }
+            { name: "Cristiano Ronaldo", team: "Al Nassr", country: "Portugal", position: "Forward", league: "Saudi Pro League" },
+            { name: "Erling Haaland", team: "Man City", country: "Norway", position: "Striker", league: "Premier League" },
+            { name: "Kylian Mbappé", team: "Real Madrid", country: "France", position: "Forward", league: "La Liga" },
+            { name: "Virgil van Dijk", team: "Liverpool", country: "Netherlands", position: "Defender", league: "Premier League" },
+            { name: "Kevin De Bruyne", team: "Man City", country: "Belgium", position: "Midfielder", league: "Premier League" },
+            { name: "Mohamed Salah", team: "Liverpool", country: "Egypt", position: "Forward", league: "Premier League" },
+            { name: "Vinicius Jr", team: "Real Madrid", country: "Brazil", position: "Forward", league: "La Liga" },
+            { name: "Harry Kane", team: "Bayern Munich", country: "England", position: "Striker", league: "Bundesliga" },
+            { name: "Jude Bellingham", team: "Real Madrid", country: "England", position: "Midfielder", league: "La Liga" }
         ],
         relations: ["team", "country", "league", "position"]
     },
     Cricket: {
         entities: [
             { name: "Virat Kohli", team: "India", role: "Batsman", ipl_team: "RCB" },
-            { name: "Pat Cummins", team: "Australia", role: "Bowler", ipl_team: "SRH" }
+            { name: "Pat Cummins", team: "Australia", role: "Bowler", ipl_team: "SRH" },
+            { name: "Ben Stokes", team: "England", role: "All-Rounder", ipl_team: "CSK" },
+            { name: "Rohit Sharma", team: "India", role: "Batsman", ipl_team: "Mumbai Indians" },
+            { name: "Jasprit Bumrah", team: "India", role: "Bowler", ipl_team: "Mumbai Indians" },
+            { name: "Kane Williamson", team: "New Zealand", role: "Batsman", ipl_team: "Gujarat Titans" },
+            { name: "Rashid Khan", team: "Afghanistan", role: "Bowler", ipl_team: "Gujarat Titans" },
+            { name: "Andre Russell", team: "West Indies", role: "All-Rounder", ipl_team: "KKR" },
+            { name: "Hardik Pandya", team: "India", role: "All-Rounder", ipl_team: "Mumbai Indians" },
+            { name: "Jos Buttler", team: "England", role: "Wicketkeeper-Batsman", ipl_team: "Rajasthan Royals" }
         ],
         relations: ["team", "role", "ipl_team"]
     },
     NBA: {
         entities: [
             { name: "LeBron James", team: "Lakers", position: "Forward", college: "None (High School)" },
-            { name: "Steph Curry", team: "Warriors", position: "Guard", college: "Davidson" }
+            { name: "Steph Curry", team: "Warriors", position: "Guard", college: "Davidson" },
+            { name: "Nikola Jokic", team: "Nuggets", position: "Center", college: "International" },
+            { name: "Luka Doncic", team: "Mavericks", position: "Guard", college: "International" },
+            { name: "Giannis Antetokounmpo", team: "Bucks", position: "Forward", college: "International" },
+            { name: "Kevin Durant", team: "Suns", position: "Forward", college: "Texas" },
+            { name: "Jayson Tatum", team: "Celtics", position: "Forward", college: "Duke" },
+            { name: "Joel Embiid", team: "76ers", position: "Center", college: "Kansas" },
+            { name: "Jimmy Butler", team: "Heat", position: "Forward", college: "Marquette" },
+            { name: "Shai Gilgeous-Alexander", team: "Thunder", position: "Guard", college: "Kentucky" }
         ],
         relations: ["team", "position", "college"]
     },
     Tennis: {
         entities: [
             { name: "Novak Djokovic", country: "Serbia", hand: "Right-handed", best_surface: "Hard Court" },
-            { name: "Carlos Alcaraz", country: "Spain", hand: "Right-handed", best_surface: "Clay/Grass" }
+            { name: "Carlos Alcaraz", country: "Spain", hand: "Right-handed", best_surface: "Clay/Grass" },
+            { name: "Rafael Nadal", country: "Spain", hand: "Left-handed", best_surface: "Clay" },
+            { name: "Iga Swiatek", country: "Poland", hand: "Right-handed", best_surface: "Clay" },
+            { name: "Daniil Medvedev", country: "Russia", hand: "Right-handed", best_surface: "Hard Court" },
+            { name: "Aryna Sabalenka", country: "Belarus", hand: "Right-handed", best_surface: "Hard Court" },
+            { name: "Coco Gauff", country: "USA", hand: "Right-handed", best_surface: "Hard Court" },
+            { name: "Jannik Sinner", country: "Italy", hand: "Right-handed", best_surface: "Hard Court" },
+            { name: "Roger Federer", country: "Switzerland", hand: "Right-handed", best_surface: "Grass" },
+            { name: "Stefanos Tsitsipas", country: "Greece", hand: "Right-handed", best_surface: "Clay" }
         ],
         relations: ["country", "hand", "best_surface"]
     }
