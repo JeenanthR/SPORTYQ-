@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SportyQ</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; width:100%; font-family:"Poppins", sans-serif; background:#0f172a; color:#fff; overflow:hidden; }
+body { background:url("Sports.jpg") no-repeat center center fixed; background-size:cover; }
+
+header { width:100%; padding:10px 20px; display:flex; align-items:center; justify-content:space-between; position:absolute; top:0; z-index:10; background: transparent; }
+.logo { display:flex; align-items:center; gap:10px; }
+.logo img { width:110px; height:auto; }
+.logo h1 { font-size:2.2rem; text-shadow:2px 2px 4px rgba(0,0,0,0.8); }
+.auth-buttons { display:flex; gap:12px; }
+.auth-buttons a { text-decoration:none; padding:8px 20px; border-radius:8px; font-weight:bold; font-size:0.95rem; background:#1e90ff; color:#fff; border:2px solid #1e90ff; cursor:pointer; transition:0.3s; }
+.auth-buttons a:hover { background:#fff; color:#1e90ff; }
+
+.section { width:100%; height:100vh; display:none; flex-direction:column; justify-content:center; align-items:center; padding-top:80px; }
+.section.active { display:flex; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.welcome .content { display:flex; width:100%; height:calc(100% - 80px); justify-content:space-around; align-items:center; padding:20px; }
+.intro { width:45%; height:90%; padding:25px; background: rgba(0,0,0,0.6); border-radius:12px; overflow-y:auto; }
+.intro h2 { font-size:3rem; margin-bottom:15px; }
+.intro p { font-size:1.3rem; line-height:1.6; }
+.benefits { margin-top:20px; font-size:1.2rem; line-height:1.6; }
+.image-side { width:50%; height:90%; border-radius:18px; overflow:hidden; position:relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); background: #000; }
+.slide { position:absolute; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1s ease-in-out; }
+.slide.active { opacity:1; }
+
+.sports-selection { background: rgba(0,0,0,0.4); padding:20px; }
+.sports-selection h2 { margin-bottom:30px; font-size:2.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.sports-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:25px; width:90%; max-width: 1200px; }
+.card { background: rgba(20, 20, 30, 0.85); border-radius:15px; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:space-between; transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.1); }
+.card:hover { transform: translateY(-5px); border-color: #1e90ff; }
+.card img { width:100%; height:160px; object-fit:cover; border-bottom:2px solid #1e90ff; background: #333; }
+.card h3 { margin:15px 0; font-size: 1.5rem; }
+.card button { margin-bottom:20px; padding:10px 25px; border:none; border-radius:8px; background:#1e90ff; color:#fff; cursor:pointer; font-weight:bold; transition: 0.2s; }
+.card button:hover { background: #0077ea; }
+
+.quiz-container { background: rgba(15, 23, 42, 0.95); width: 90%; max-width: 800px; padding: 30px; border-radius: 20px; box-shadow: 0 0 20px rgba(30, 144, 255, 0.3); text-align: center; border: 1px solid rgba(30, 144, 255, 0.3); position: relative; overflow: hidden; }
+.quiz-header { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 1.2rem; color: #88ccff; }
+.question-box { margin: 30px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; }
+.question-text { font-size: 1.8rem; font-weight: bold; }
+.options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+.option-btn { background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; color: white; font-size: 1.1rem; cursor: pointer; transition: all 0.2s; }
+.option-btn:hover { background: rgba(30, 144, 255, 0.2); border-color: #1e90ff; }
+.option-btn.correct { background: #22c55e !important; border-color: #22c55e !important; }
+.option-btn.wrong { background: #ef4444 !important; border-color: #ef4444 !important; opacity: 0.6; }
+.controls { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+.game-btn { padding: 10px 20px; background: #1e90ff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; }
+.game-btn.secondary { background: #475569; }
+
+.admin-panel { background: rgba(0,0,0,0.4); padding:20px; width: 100%; height: 100%; overflow-y: auto; }
+.admin-panel h2 { margin-bottom:30px; font-size:2.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); text-align: center; }
+.admin-controls { display: flex; gap: 15px; margin-bottom: 30px; justify-content: center; flex-wrap: wrap; }
+.admin-btn { padding: 12px 25px; background: #1e90ff; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+.admin-btn:hover { background: #0077ea; }
+.admin-btn.secondary { background: #475569; }
+.admin-btn.danger { background: #ef4444; }
+.admin-btn.success { background: #22c55e; }
+.question-management { background: rgba(20, 20, 30, 0.85); padding: 25px; border-radius: 15px; margin: 20px auto; max-width: 1000px; }
+.question-form { display: grid; gap: 15px; margin-bottom: 30px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group label { font-weight: bold; color: #94a3b8; }
+.form-group input, .form-group select, .form-group textarea { padding: 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; outline: none; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #1e90ff; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.questions-list { margin-top: 30px; }
+.question-item { background: rgba(15, 23, 42, 0.9); padding: 20px; margin: 15px 0; border-radius: 10px; border: 1px solid #334155; transition: all 0.3s; }
+.question-item:hover { border-color: #1e90ff; }
+.question-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.question-sport { background: #1e90ff; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+.question-actions { display: flex; gap: 10px; }
+.question-text { font-size: 1.1rem; margin-bottom: 10px; font-weight: bold; }
+.question-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.option-item { padding: 8px; background: rgba(255,255,255,0.05); border-radius: 5px; }
+.option-item.correct { background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; }
+
+.celebration-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; display: none; }
+.confetti { position: absolute; width: 10px; height: 20px; background: #f00; top: 0; opacity: 0; }
+.firework { position: absolute; width: 5px; height: 5px; border-radius: 50%; box-shadow: 0 0 10px #fff; top: 50%; left: 50%; opacity: 0; }
+.emoji-celebration { position: absolute; font-size: 2rem; opacity: 0; animation: floatUp 2s forwards; }
+@keyframes floatUp { 0% { transform: translateY(0) scale(0.5); opacity: 1; } 100% { transform: translateY(-100px) scale(1); opacity: 0; } }
+.score-popup { position: absolute; font-size: 2.5rem; font-weight: bold; color: gold; text-shadow: 0 0 10px rgba(255,215,0,0.8); opacity: 0; animation: popInOut 1.5s forwards; z-index: 1001; }
+@keyframes popInOut { 0% { transform: scale(0.5); opacity: 0; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); opacity: 0; } }
+.pulse-effect { animation: pulse 0.5s ease-in-out; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+.modal { position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display:none; justify-content:center; align-items:center; z-index:100; backdrop-filter: blur(5px); }
+.modal.active { display:flex; animation: popIn 0.3s ease; }
+@keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.modal-content { background:#1e293b; padding:30px; border-radius:16px; width:90%; max-width:400px; color:#fff; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+.modal-content h2 { margin-top:0; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 20px; }
+.modal-content label { display:block; margin-top:15px; font-weight:bold; color: #94a3b8; font-size: 0.9rem; }
+.modal-content input { width:100%; padding:12px; margin-top:5px; border-radius:6px; border:1px solid #334155; background: #0f172a; color: white; outline: none; }
+.modal-content input:focus { border-color: #1e90ff; }
+.modal-content button { margin-top:25px; padding:12px; width:100%; border:none; border-radius:8px; background:#1e90ff; color:#fff; font-weight:bold; cursor:pointer; font-size: 1rem; transition: 0.2s; }
+.modal-content button:hover { background: #3b82f6; }
+.close-btn { float:right; font-size:1.5rem; cursor:pointer; color: #94a3b8; }
+.close-btn:hover { color: white; }
+
+.type-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 20px; margin-top: 15px; background: #334155; border: 2px solid transparent; border-radius: 12px; color: white; cursor: pointer; transition: 0.3s; }
+.type-btn:hover { background: #475569; border-color: #1e90ff; }
+.type-btn strong { font-size: 1.1rem; display: block; margin-bottom: 5px; }
+.type-btn small { color: #94a3b8; font-weight: normal; }
+
+.error-message { color: #ef4444; font-size: 0.9rem; margin-top: 10px; text-align: center; display: none; }
+.success-message { color: #22c55e; font-size: 0.9rem; margin-top: 10px; text-align: center; display: none; }
+
+footer { position:absolute; bottom:0; width:100%; text-align:center; padding:15px 0; background: rgba(0,0,0,0.5); font-size: 1rem; color: #94a3b8; }
+
+@media(max-width:900px){
+  .welcome .content { flex-direction:column; justify-content: center; gap: 20px; }
+  .intro,.image-side { width:90%; height:auto; min-height: 40%; }
+  .options-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .question-options { grid-template-columns: 1fr; }
+  .question-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+</style>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<div class="celebration-container" id="celebrationContainer"></div>
+
+<header>
+  <div class="logo">
+    <img src="logo1.png" alt="Logo"><h1>SportyQ</h1>
+  </div>
+  <div class="auth-buttons" id="auth-btns">
+    <a class="signin-btn">Sign In</a>
+    <a class="signup-btn">Sign Up</a>
+    <a class="admin-signin-btn" style="background: #ef4444;">Admin</a>
+  </div>
+  <div class="auth-buttons" id="user-display" style="display:none;">
+    <span style="align-self:center; margin-right:10px; font-weight:bold;">Hi, <span id="username-span">User</span></span>
+    <a onclick="logout()">Logout</a>
+  </div>
+  <div class="auth-buttons" id="admin-display" style="display:none;">
+    <span style="align-self:center; margin-right:10px; font-weight:bold; color: #ef4444;">Admin Panel</span>
+    <a onclick="openAdminPanel()" style="background: #ef4444;">Manage Questions</a>
+    <a onclick="logout()">Logout</a>
+  </div>
+</header>
+
+<div class="section welcome active">
+  <div class="content">
+    <div class="intro">
+      <h2>Welcome to SportyQ</h2>
+      <p>SportyQ is your AI-powered sports trivia companion — designed to make learning, competing, and improving your sports knowledge fun and engaging.</p>
+      <div class="benefits">
+        ✔ Smart AI-generated sports questions<br>
+        ✔ Covers Football, Cricket, NBA, Tennis and more<br>
+        ✔ Instant answers & explanations<br>
+        ✔ Fun, interactive and gamified experience<br>
+        ✔ Track your scores and improve daily<br>
+        ✔ Admin panel for question management
+      </div>
+    </div>
+    <div class="image-side">
+      <img src="sl1.jpg" class="slide active" alt="Slide 1">
+      <img src="sl2.jpg" class="slide" alt="Slide 2">
+      <img src="sl3.jpg" class="slide" alt="Slide 3">
+      <img src="sl4.jpg" class="slide" alt="Slide 4">
+      <img src="sl5.jpg" class="slide" alt="Slide 5">
+      <img src="sl6.jpg" class="slide" alt="Slide 6">
+      <img src="sl7.jpg" class="slide" alt="Slide 7">
+      <img src="sl8.jpg" class="slide" alt="Slide 8">
+      <img src="sl9.jpg" class="slide" alt="Slide 9">
+      <img src="sl10.png" class="slide" alt="Slide 10">
+    </div>
+  </div>
+</div>
+
+<div class="section sports-selection">
+  <h2>Select Your Arena</h2>
+  <div class="sports-grid">
+    <div class="card">
+      <img src="football.png" alt="Football">
+      <h3>⚽ Football</h3>
+      <button onclick="chooseQuestionType('Football')">Explore</button>
+    </div>
+    <div class="card">
+      <img src="cricket1.jpg" alt="Cricket">
+      <h3>🏏 Cricket</h3>
+      <button onclick="chooseQuestionType('Cricket')">Explore</button>
+    </div>
+    <div class="card">
+      <img src="NBA1.png" alt="NBA">
+      <h3>🏀 NBA</h3>
+      <button onclick="chooseQuestionType('NBA')">Explore</button>
+    </div>
+    <div class="card">
+      <img src="Tennis.jpg" alt="Tennis">
+      <h3>🎾 Tennis</h3>
+      <button onclick="chooseQuestionType('Tennis')">Explore</button>
+    </div>
+  </div>
+</div>
+
+<div class="section quiz-section" id="quizInterface">
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <span id="quiz-sport-label">Football</span>
+            <span>Score: <span id="score-val">0</span></span>
+        </div>
+        <div class="question-box">
+            <div class="question-text" id="question-text">Loading...</div>
+        </div>
+        <div class="options-grid" id="options-container"></div>
+        <div class="controls">
+            <button class="game-btn secondary" onclick="exitToMenu()">Exit</button>
+            <button class="game-btn" id="next-btn" onclick="nextQuestion()" style="display:none;">Next Question</button>
+        </div>
+    </div>
+</div>
+
+<div class="section admin-panel">
+    <h2>Admin Panel - Question Management</h2>
+    <div class="admin-controls">
+        <button class="admin-btn" onclick="showAddQuestionForm()">
+            <i class="fas fa-plus"></i> Add New Question
+        </button>
+        <button class="admin-btn secondary" onclick="refreshQuestions()">
+            <i class="fas fa-sync"></i> Refresh List
+        </button>
+        <button class="admin-btn" onclick="switchSection('sports-selection')">
+            <i class="fas fa-arrow-left"></i> Back to Sports
+        </button>
+    </div>
+    <div class="question-management">
+        <div id="question-form-container" style="display: none;">
+            <h3 id="form-title">Add New Question</h3>
+            <div class="question-form">
+                <div class="form-group">
+                    <label for="question-sport">Sport:</label>
+                    <select id="question-sport">
+                        <option value="Football">Football</option>
+                        <option value="Cricket">Cricket</option>
+                        <option value="NBA">NBA</option>
+                        <option value="Tennis">Tennis</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="question-text-input">Question Text:</label>
+                    <textarea id="question-text-input" rows="3" placeholder="Enter the question..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="option1">Option 1:</label>
+                        <input type="text" id="option1" placeholder="Option 1">
+                    </div>
+                    <div class="form-group">
+                        <label for="option2">Option 2:</label>
+                        <input type="text" id="option2" placeholder="Option 2">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="option3">Option 3:</label>
+                        <input type="text" id="option3" placeholder="Option 3">
+                    </div>
+                    <div class="form-group">
+                        <label for="option4">Option 4:</label>
+                        <input type="text" id="option4" placeholder="Option 4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="correct-answer">Correct Answer:</label>
+                    <select id="correct-answer">
+                        <option value="0">Option 1</option>
+                        <option value="1">Option 2</option>
+                        <option value="2">Option 3</option>
+                        <option value="3">Option 4</option>
+                    </select>
+                </div>
+                <div class="admin-controls">
+                    <button class="admin-btn success" onclick="saveQuestion()">
+                        <i class="fas fa-save"></i> Save Question
+                    </button>
+                    <button class="admin-btn secondary" onclick="cancelEdit()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="questions-list" id="questions-list">
+            <h3>Existing Questions</h3>
+            <div id="questions-container"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="signinModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('signinModal')">&times;</span>
+    <h2>Sign In</h2>
+    <label>Email</label>
+    <input type="email" id="signin-email" placeholder="Enter your email">
+    <label>Password</label>
+    <input type="password" id="signin-password" placeholder="Enter your password">
+    <div id="signin-error" class="error-message"></div>
+    <button onclick="signIn()">Sign In</button>
+    <p style="margin-top:15px; text-align:center; font-size:0.9rem;">
+      Don't have an account? <a href="#" style="color:#1e90ff;" onclick="openSignupFromSignin()">Sign Up</a>
+    </p>
+  </div>
+</div>
+
+<div class="modal" id="signupModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('signupModal')">&times;</span>
+    <h2>Sign Up</h2>
+    <label>Name</label>
+    <input type="text" id="signup-name" placeholder="Your Name">
+    <label>Email</label>
+    <input type="email" id="signup-email" placeholder="Enter your email">
+    <label>Password</label>
+    <input type="password" id="signup-password" placeholder="Create a password">
+    <div id="signup-error" class="error-message"></div>
+    <div id="signup-success" class="success-message"></div>
+    <button onclick="signUp()">Create Account</button>
+    <p style="margin-top:15px; text-align:center; font-size:0.9rem;">
+      Already have an account? <a href="#" style="color:#1e90ff;" onclick="openSigninFromSignup()">Sign In</a>
+    </p>
+  </div>
+</div>
+
+<div class="modal" id="adminSigninModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('adminSigninModal')">&times;</span>
+    <h2>Admin Sign In</h2>
+    <label>Admin Password</label>
+    <input type="password" id="admin-password" placeholder="Enter admin password">
+    <div id="admin-error" class="error-message"></div>
+    <button onclick="adminSignIn()">Sign In as Admin</button>
+  </div>
+</div>
+
+<div class="modal" id="questionTypeModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('questionTypeModal')">&times;</span>
+    <h2 id="sportName">Select Mode</h2>
+    <button class="type-btn" onclick="startQuiz('AI')">
+        <strong><i class="fas fa-brain"></i> AI Questions </strong>
+    </button>
+    <button class="type-btn" onclick="startQuiz('Default')">
+        <strong><i class="fas fa-list"></i> Manual Questions </strong>
+    </button>
+  </div>
+</div>
+
+<footer>© 2025 SportyQ | Group 11 </footer>
+
+<script>
+// ==================== ADMIN CONFIG ====================
+const ADMIN_CONFIG = { password: "admin123" };
+
+// ==================== DATA STORAGE ====================
+const userDatabase = JSON.parse(localStorage.getItem('sportyq_users')) || {};
+let allQuestions = JSON.parse(localStorage.getItem('sportyq_custom_questions')) || {};
+
+// ==================== DEFAULT QUESTIONS ====================
+const defaultQuestions = {
+    Football: [
+        { q: "Who won the 2018 FIFA World Cup?", correct: "France", options: ["France", "Croatia", "Brazil", "Germany"] },
+        { q: "Who has won the most Ballon d'Or awards?", correct: "Messi", options: ["Ronaldo", "Messi", "Pele", "Maradona"] },
+        { q: "Which club plays at Anfield?", correct: "Liverpool", options: ["Man Utd", "Liverpool", "Chelsea", "Arsenal"] },
+        { q: "Who is known as 'The Special One'?", correct: "Mourinho", options: ["Pep Guardiola", "Klopp", "Mourinho", "Ancelotti"] },
+        { q: "Which country won Euro 2016?", correct: "Portugal", options: ["France", "Germany", "Portugal", "Spain"] },
+        { q: "Who is the all-time top scorer in the Champions League?", correct: "Ronaldo", options: ["Messi", "Ronaldo", "Lewandowski", "Benzema"] },
+        { q: "Which country is Pele from?", correct: "Brazil", options: ["Argentina", "Brazil", "Portugal", "Spain"] },
+        { q: "Where was the 2022 World Cup held?", correct: "Qatar", options: ["Russia", "Brazil", "Qatar", "USA"] },
+        { q: "Which player scored the 'Hand of God' goal?", correct: "Maradona", options: ["Pele", "Messi", "Maradona", "Zidane"] },
+        { q: "Which English club went an entire season unbeaten in 2003-04?", correct: "Arsenal", options: ["Man Utd", "Chelsea", "Liverpool", "Arsenal"] },
+        { q: "Who won the 2014 World Cup?", correct: "Germany", options: ["Argentina", "Brazil", "Germany", "Spain"] },
+        { q: "Which club did Alex Ferguson manage for 26 years?", correct: "Man Utd", options: ["Liverpool", "Man Utd", "Everton", "Chelsea"] },
+        { q: "What color card results in a sending off?", correct: "Red", options: ["Yellow", "Red", "Blue", "Green"] },
+        { q: "Which country has won the most World Cups?", correct: "Brazil", options: ["Germany", "Italy", "Brazil", "Argentina"] },
+        { q: "Who is the manager of Manchester City (2024)?", correct: "Guardiola", options: ["Klopp", "Arteta", "Guardiola", "Ten Hag"] },
+        { q: "Which team is nicknamed 'The Old Lady'?", correct: "Juventus", options: ["Milan", "Inter", "Juventus", "Roma"] },
+        { q: "Who won the Golden Boot at the 2018 World Cup?", correct: "Kane", options: ["Mbappe", "Kane", "Modric", "Griezmann"] },
+        { q: "Which stadium is known as the 'Theatre of Dreams'?", correct: "Old Trafford", options: ["Anfield", "Wembley", "Old Trafford", "Camp Nou"] },
+        { q: "Who won the 2022 World Cup?", correct: "Argentina", options: ["France", "Brazil", "Argentina", "Croatia"] },
+        { q: "Which player is nicknamed 'El Nino'?", correct: "Torres", options: ["Villa", "Torres", "Raul", "Xavi"] },
+        { q: "Who is the manager of Liverpool FC (2024)?", correct: "Arne Slot", options: ["Klopp", "Arne Slot", "Pep", "Tuchel"] },
+        { q: "Which team won the Champions League in 2023?", correct: "Man City", options: ["Inter Milan", "Man City", "Real Madrid", "Chelsea"] },
+        { q: "Who is the all-time top scorer for the Brazil national team?", correct: "Neymar", options: ["Pele", "Neymar", "Ronaldo", "Romario"] },
+        { q: "Which country hosted the 2010 World Cup?", correct: "South Africa", options: ["Brazil", "Germany", "South Africa", "Russia"] },
+        { q: "Which player transferred from Barcelona to PSG for a record fee?", correct: "Neymar", options: ["Messi", "Neymar", "Suarez", "Mbappe"] },
+        { q: "What is the name of Arsenal's home stadium?", correct: "Emirates", options: ["Highbury", "Emirates", "Stamford Bridge", "Anfield"] },
+        { q: "Which German club has won the most Bundesliga titles?", correct: "Bayern Munich", options: ["Dortmund", "Bayern Munich", "Leverkusen", "Leipzig"] },
+        { q: "Who scored the winning goal in the 2014 World Cup final?", correct: "Gotze", options: ["Muller", "Gotze", "Klose", "Ozil"] },
+        { q: "Which Italian club has won the most Serie A titles?", correct: "Juventus", options: ["AC Milan", "Inter", "Juventus", "Napoli"] },
+        { q: "Who is the captain of the England national team (2024)?", correct: "Kane", options: ["Rice", "Kane", "Bellingham", "Stones"] },
+        { q: "Which country does Erling Haaland represent?", correct: "Norway", options: ["Sweden", "Denmark", "Norway", "Finland"] },
+        { q: "Who won the Copa America in 2021?", correct: "Argentina", options: ["Brazil", "Argentina", "Chile", "Uruguay"] },
+        { q: "Which club is known as 'The Red Devils'?", correct: "Man Utd", options: ["Liverpool", "Arsenal", "Man Utd", "Milan"] },
+        { q: "Who is the top scorer in Premier League history?", correct: "Shearer", options: ["Rooney", "Shearer", "Kane", "Henry"] },
+        { q: "Which country won the first ever World Cup in 1930?", correct: "Uruguay", options: ["Argentina", "Brazil", "Uruguay", "Italy"] },
+        { q: "Who is the goalkeeper for Real Madrid (2024)?", correct: "Courtois", options: ["Lunin", "Courtois", "Neuer", "Oblak"] },
+        { q: "Which player is known as 'CR7'?", correct: "Ronaldo", options: ["Ronaldo", "Messi", "Ronaldinho", "Rooney"] },
+        { q: "What is the duration of a standard football match?", correct: "90 mins", options: ["60 mins", "80 mins", "90 mins", "100 mins"] },
+        { q: "Which team plays at the Camp Nou?", correct: "Barcelona", options: ["Real Madrid", "Barcelona", "Valencia", "Sevilla"] },
+        { q: "Who won the Women's World Cup in 2023?", correct: "Spain", options: ["England", "Spain", "USA", "Sweden"] },
+        { q: "Who is the manager of Real Madrid (2024)?", correct: "Ancelotti", options: ["Zidane", "Ancelotti", "Mourinho", "Alonso"] },
+        { q: "Which player has the most assists in Premier League history?", correct: "Giggs", options: ["De Bruyne", "Giggs", "Fabregas", "Rooney"] },
+        { q: "Which country does Mohamed Salah represent?", correct: "Egypt", options: ["Morocco", "Egypt", "Senegal", "Nigeria"] },
+        { q: "Who won the Premier League in the 2015-2016 season?", correct: "Leicester City", options: ["Chelsea", "Man City", "Leicester City", "Arsenal"] },
+        { q: "Which French player is nicknamed 'The King' at Arsenal?", correct: "Henry", options: ["Vieira", "Pires", "Henry", "Giroud"] },
+        { q: "Who is the all-time top scorer for England?", correct: "Kane", options: ["Rooney", "Charlton", "Kane", "Lineker"] },
+        { q: "Which club did Lionel Messi join after leaving Barcelona?", correct: "PSG", options: ["Man City", "PSG", "Inter Miami", "Chelsea"] },
+        { q: "Who won the 2006 World Cup?", correct: "Italy", options: ["France", "Italy", "Germany", "Brazil"] },
+        { q: "Which player famously headbutted Materazzi in the 2006 final?", correct: "Zidane", options: ["Henry", "Trezeguet", "Zidane", "Thuram"] },
+        { q: "Which stadium hosted the 2024 Champions League final?", correct: "Wembley", options: ["Paris", "Wembley", "Munich", "Istanbul"] }
+    ],
+    Cricket: [
+        { q: "How many balls are there in a standard over?", correct: "6", options: ["5", "6", "8", "10"] },
+        { q: "Who won the 2011 ICC Cricket World Cup?", correct: "India", options: ["Sri Lanka", "India", "Australia", "England"] },
+        { q: "Who is known as the 'Little Master'?", correct: "Tendulkar", options: ["Gavaskar", "Kohli", "Tendulkar", "Ponting"] },
+        { q: "Who holds the record for the highest individual score in Test cricket?", correct: "Lara", options: ["Hayden", "Lara", "Sehwag", "Bradman"] },
+        { q: "Which country won the 2019 World Cup?", correct: "England", options: ["New Zealand", "India", "Australia", "England"] },
+        { q: "Who won the inaugural T20 World Cup in 2007?", correct: "India", options: ["Pakistan", "India", "Australia", "South Africa"] },
+        { q: "Who is known as 'The Wall' of Indian cricket?", correct: "Dravid", options: ["Tendulkar", "Dravid", "Laxman", "Ganguly"] },
+        { q: "Which bowler has the most wickets in Test history?", correct: "Muralitharan", options: ["Warne", "Anderson", "Muralitharan", "Kumble"] },
+        { q: "Which ground is known as the 'Home of Cricket'?", correct: "Lord's", options: ["MCG", "Eden Gardens", "Lord's", "The Oval"] },
+        { q: "Who won the IPL in 2023?", correct: "CSK", options: ["Mumbai Indians", "Gujarat Titans", "CSK", "RCB"] },
+        { q: "What is the length of a cricket pitch?", correct: "22 Yards", options: ["20 Yards", "22 Yards", "24 Yards", "18 Yards"] },
+        { q: "Who is known as 'Captain Cool'?", correct: "Dhoni", options: ["Kohli", "Dhoni", "Williamson", "Rohit"] },
+        { q: "Which team has won the most ODI World Cups?", correct: "Australia", options: ["India", "West Indies", "Australia", "England"] },
+        { q: "What is the maximum number of overs a bowler can bowl in an ODI?", correct: "10", options: ["5", "10", "12", "20"] },
+        { q: "Who hit 6 sixes in an over in the 2007 T20 World Cup?", correct: "Yuvraj", options: ["Gibbs", "Yuvraj", "Pollard", "Gayle"] },
+        { q: "Who is the 'Universe Boss'?", correct: "Gayle", options: ["Russell", "Gayle", "Pollard", "Bravo"] },
+        { q: "Which trophy is played for between England and Australia?", correct: "The Ashes", options: ["Border-Gavaskar", "The Ashes", "Chappell-Hadlee", "Wisden"] },
+        { q: "Who was the first batsman to score a double century in ODIs?", correct: "Tendulkar", options: ["Sehwag", "Rohit", "Tendulkar", "Guptill"] },
+        { q: "Which IPL team has won 5 titles (along with CSK)?", correct: "Mumbai Indians", options: ["KKR", "Mumbai Indians", "RCB", "SRH"] },
+        { q: "Who is the current captain of the Indian Test team (2024)?", correct: "Rohit", options: ["Kohli", "Rahane", "Rohit", "Gill"] },
+        { q: "Which country does Kane Williamson play for?", correct: "New Zealand", options: ["England", "Australia", "New Zealand", "South Africa"] },
+        { q: "Who has the most centuries in International Cricket?", correct: "Tendulkar", options: ["Kohli", "Ponting", "Tendulkar", "Kallis"] },
+        { q: "Which bowler is known as the 'Sultan of Swing'?", correct: "Wasim Akram", options: ["Waqar Younis", "Wasim Akram", "Anderson", "Steyn"] },
+        { q: "Who won the T20 World Cup in 2024?", correct: "India", options: ["South Africa", "India", "Australia", "England"] },
+        { q: "Which stadium is the largest cricket stadium in the world?", correct: "Narendra Modi Stadium", options: ["MCG", "Eden Gardens", "Narendra Modi Stadium", "Lord's"] },
+        { q: "Who is the fastest bowler in cricket history?", correct: "Shoaib Akhtar", options: ["Brett Lee", "Shoaib Akhtar", "Shaun Tait", "Starc"] },
+        { q: "Which team won the first ever Cricket World Cup in 1975?", correct: "West Indies", options: ["Australia", "England", "West Indies", "India"] },
+        { q: "Who is the only player to score 400 runs in a Test inning?", correct: "Lara", options: ["Hayden", "Lara", "Jayawardene", "Sehwag"] },
+        { q: "What does LBW stand for?", correct: "Leg Before Wicket", options: ["Leg By Wicket", "Leg Before Wicket", "Long Ball Wicket", "Left Bat Wicket"] },
+        { q: "Who is the leading run scorer in IPL history?", correct: "Kohli", options: ["Rohit", "Warner", "Kohli", "Dhawan"] },
+        { q: "Which country is known as the 'Proteas'?", correct: "South Africa", options: ["Zimbabwe", "South Africa", "New Zealand", "West Indies"] },
+        { q: "Who took 10 wickets in a single Test inning against India?", correct: "Ajaz Patel", options: ["Kumble", "Laker", "Ajaz Patel", "Warne"] },
+        { q: "Who is the current captain of Australia (Tests)?", correct: "Cummins", options: ["Smith", "Cummins", "Labuschagne", "Head"] },
+        { q: "Which format of cricket lasts for 5 days?", correct: "Test", options: ["ODI", "T20", "Test", "The Hundred"] },
+        { q: "Who won the Player of the Tournament in the 2011 World Cup?", correct: "Yuvraj", options: ["Tendulkar", "Yuvraj", "Zaheer", "Dhoni"] },
+        { q: "Who is the wicketkeeper for Rajasthan Royals?", correct: "Samson", options: ["Buttler", "Samson", "Pant", "Rahul"] },
+        { q: "Which bowler has the best bowling figures in an ODI match?", correct: "Chaminda Vaas", options: ["Murali", "Vaas", "Afridi", "Binny"] },
+        { q: "Who is nicknamed 'Hitman'?", correct: "Rohit", options: ["Kohli", "Dhoni", "Rohit", "Gayle"] },
+        { q: "Which country hosted the 2023 ODI World Cup?", correct: "India", options: ["England", "Australia", "India", "South Africa"] },
+        { q: "Who scored the fastest century in ODI cricket?", correct: "AB de Villiers", options: ["Afridi", "Anderson", "AB de Villiers", "Kohli"] },
+        { q: "Which player has the most sixes in International Cricket?", correct: "Rohit", options: ["Gayle", "Afridi", "Rohit", "McCullum"] },
+        { q: "Who is the coach of the Indian Cricket Team (2024)?", correct: "Gambhir", options: ["Dravid", "Shastri", "Gambhir", "Laxman"] },
+        { q: "Which team has never won the ODI World Cup?", correct: "South Africa", options: ["Pakistan", "Sri Lanka", "South Africa", "West Indies"] },
+        { q: "Who is the youngest player to score a Test century?", correct: "Ashraful", options: ["Tendulkar", "Mushtaq", "Ashraful", "Prithvi Shaw"] },
+        { q: "What is the term for scoring zero runs?", correct: "Duck", options: ["Egg", "Duck", "Nil", "Zero"] },
+        { q: "Who won the World Test Championship in 2023?", correct: "Australia", options: ["India", "New Zealand", "Australia", "England"] },
+        { q: "Which player is known as 'Mr. 360'?", correct: "AB de Villiers", options: ["Maxwell", "AB de Villiers", "Suryakumar", "Dilshan"] },
+        { q: "Who has the most stumpings in International Cricket?", correct: "Dhoni", options: ["Sangakkara", "Gilchrist", "Dhoni", "Boucher"] },
+        { q: "Which cricket ground is in Dharamshala?", correct: "HPCA Stadium", options: ["Wankhede", "HPCA Stadium", "Chepauk", "Kotla"] },
+        { q: "Who is the highest wicket taker for India in ODIs?", correct: "Kumble", options: ["Srinath", "Kumble", "Agarkar", "Zaheer"] }
+    ],
+    NBA: [
+        { q: "Who is the silhouette on the NBA logo?", correct: "Jerry West", options: ["Michael Jordan", "Kobe Bryant", "Jerry West", "LeBron James"] },
+        { q: "Who has scored the most points in NBA history?", correct: "LeBron James", options: ["Kareem Abdul-Jabbar", "LeBron James", "Karl Malone", "Kobe Bryant"] },
+        { q: "How many championships did the Chicago Bulls win in the 1990s?", correct: "6", options: ["4", "5", "6", "7"] },
+        { q: "Who was known as 'The Black Mamba'?", correct: "Kobe Bryant", options: ["Jordan", "Shaq", "Kobe Bryant", "Iverson"] },
+        { q: "Who scored 100 points in a single game?", correct: "Wilt Chamberlain", options: ["Kobe Bryant", "Wilt Chamberlain", "Jordan", "LeBron"] },
+        { q: "Which team plays in San Francisco?", correct: "Warriors", options: ["Lakers", "Clippers", "Warriors", "Kings"] },
+        { q: "Who won the 2023 NBA Championship?", correct: "Nuggets", options: ["Heat", "Celtics", "Nuggets", "Bucks"] },
+        { q: "Who has the most career assists?", correct: "John Stockton", options: ["Magic Johnson", "Chris Paul", "John Stockton", "Kidd"] },
+        { q: "Which is the only Canadian team in the NBA?", correct: "Toronto Raptors", options: ["Vancouver Grizzlies", "Montreal Heat", "Toronto Raptors", "Ottawa Senators"] },
+        { q: "Who is nicknamed 'The Greek Freak'?", correct: "Giannis", options: ["Jokic", "Doncic", "Giannis", "Porzingis"] },
+        { q: "Which team drafted Michael Jordan?", correct: "Bulls", options: ["Blazers", "Bulls", "Rockets", "Knicks"] },
+        { q: "How many quarters are in an NBA game?", correct: "4", options: ["2", "3", "4", "5"] },
+        { q: "Which team has the most NBA championships (tied)?", correct: "Lakers & Celtics", options: ["Bulls & Lakers", "Lakers & Celtics", "Celtics & Bulls", "Warriors & Spurs"] },
+        { q: "Who is the shortest player to ever play in the NBA?", correct: "Muggsy Bogues", options: ["Spud Webb", "Muggsy Bogues", "Earl Boykins", "Isaiah Thomas"] },
+        { q: "What is the regulation height of the basket?", correct: "10 feet", options: ["9 feet", "10 feet", "11 feet", "12 feet"] },
+        { q: "Which player has the most MVP awards?", correct: "Kareem", options: ["Jordan", "LeBron", "Kareem", "Russell"] },
+        { q: "Who is the 'Splash Brothers' duo?", correct: "Curry & Thompson", options: ["Jordan & Pippen", "Curry & Thompson", "LeBron & Wade", "Shaq & Kobe"] },
+        { q: "Which team does Luka Doncic play for?", correct: "Mavericks", options: ["Nuggets", "Suns", "Mavericks", "Spurs"] },
+        { q: "Who won the 2024 NBA MVP?", correct: "Jokic", options: ["Embiid", "Giannis", "Jokic", "SGA"] },
+        { q: "Where is the Basketball Hall of Fame located?", correct: "Springfield, MA", options: ["Chicago, IL", "New York, NY", "Springfield, MA", "Los Angeles, CA"] },
+        { q: "Who won the 2024 NBA Championship?", correct: "Celtics", options: ["Mavericks", "Celtics", "Timberwolves", "Nuggets"] },
+        { q: "Which player has the most triple-doubles in history?", correct: "Westbrook", options: ["Robertson", "Westbrook", "Jokic", "Magic"] },
+        { q: "Which team plays at Madison Square Garden?", correct: "Knicks", options: ["Nets", "Knicks", "Celtics", "76ers"] },
+        { q: "Who is the all-time leader in 3-pointers made?", correct: "Curry", options: ["Allen", "Reggie Miller", "Curry", "Harden"] },
+        { q: "Which player was nicknamed 'The Dream'?", correct: "Hakeem", options: ["Shaq", "Hakeem", "Robinson", "Ewing"] },
+        { q: "Who won the Rookie of the Year in 2024?", correct: "Wembanyama", options: ["Holmgren", "Wembanyama", "Miller", "Henderson"] },
+        { q: "Which team had the 'Showtime' era?", correct: "Lakers", options: ["Celtics", "Pistons", "Lakers", "Bulls"] },
+        { q: "Who is the commissioner of the NBA?", correct: "Adam Silver", options: ["David Stern", "Adam Silver", "Roger Goodell", "Rob Manfred"] },
+        { q: "How many players are on the court per team?", correct: "5", options: ["4", "5", "6", "7"] },
+        { q: "Which player famously wore number 23 for the Bulls?", correct: "Jordan", options: ["Pippen", "Rodman", "Jordan", "Rose"] },
+        { q: "Which team did Shaquille O'Neal win his first ring with?", correct: "Lakers", options: ["Magic", "Lakers", "Heat", "Suns"] },
+        { q: "Who is the coach of the Golden State Warriors?", correct: "Steve Kerr", options: ["Popovich", "Steve Kerr", "Spoelstra", "Rivers"] },
+        { q: "Which player is known as 'The King'?", correct: "LeBron", options: ["Jordan", "Kobe", "LeBron", "Magic"] },
+        { q: "What team is from San Antonio?", correct: "Spurs", options: ["Rockets", "Mavericks", "Spurs", "Thunder"] },
+        { q: "Who won the first ever NBA championship?", correct: "Warriors", options: ["Celtics", "Lakers", "Knicks", "Warriors"] },
+        { q: "Which player has the highest career PPG average?", correct: "Jordan", options: ["Chamberlain", "Jordan", "LeBron", "Durant"] },
+        { q: "Who is the mascot of the Chicago Bulls?", correct: "Benny", options: ["Rocky", "Benny", "Clutch", "Hugo"] },
+        { q: "Which team plays in Miami?", correct: "Heat", options: ["Magic", "Heat", "Hawks", "Hornets"] },
+        { q: "Who was the first unanimous MVP?", correct: "Curry", options: ["Jordan", "LeBron", "Curry", "Shaq"] },
+        { q: "Which player is nicknamed 'The Claw'?", correct: "Kawhi", options: ["George", "Kawhi", "Butler", "Tatum"] },
+        { q: "Who holds the record for most rebounds in a game?", correct: "Chamberlain", options: ["Russell", "Chamberlain", "Rodman", "Howard"] },
+        { q: "Which team has a clover as its logo?", correct: "Celtics", options: ["Bucks", "Celtics", "Hornets", "Jazz"] },
+        { q: "Who won the 2011 NBA Championship?", correct: "Mavericks", options: ["Heat", "Mavericks", "Lakers", "Thunder"] },
+        { q: "Which player is known as 'The Answer'?", correct: "Iverson", options: ["Kobe", "T-Mac", "Iverson", "Carter"] },
+        { q: "Who is the all-time leader in blocks?", correct: "Hakeem", options: ["Mutombo", "Hakeem", "Kareem", "Eaton"] },
+        { q: "Which team plays in Denver?", correct: "Nuggets", options: ["Jazz", "Suns", "Nuggets", "Thunder"] },
+        { q: "Who was the #1 draft pick in 2003?", correct: "LeBron", options: ["Darko", "Melo", "LeBron", "Wade"] },
+        { q: "How long is a shot clock in the NBA?", correct: "24 seconds", options: ["20 seconds", "24 seconds", "30 seconds", "35 seconds"] },
+        { q: "Which player scored 81 points in a game?", correct: "Kobe", options: ["Jordan", "Kobe", "Booker", "Thompson"] },
+        { q: "Who is the coach of the San Antonio Spurs?", correct: "Popovich", options: ["Kerr", "Popovich", "Carlisle", "Thibodeau"] }
+    ],
+    Tennis: [
+        { q: "Where is Wimbledon played?", correct: "London", options: ["Paris", "London", "New York", "Melbourne"] },
+        { q: "Who has won the most Grand Slam titles (Men)?", correct: "Djokovic", options: ["Nadal", "Federer", "Djokovic", "Sampras"] },
+        { q: "Who is known as the 'King of Clay'?", correct: "Nadal", options: ["Djokovic", "Federer", "Nadal", "Borg"] },
+        { q: "Which is the oldest Grand Slam tournament?", correct: "Wimbledon", options: ["US Open", "French Open", "Wimbledon", "Australian Open"] },
+        { q: "What surface is the US Open played on?", correct: "Hard Court", options: ["Clay", "Grass", "Hard Court", "Carpet"] },
+        { q: "Who is known as the 'Swiss Maestro'?", correct: "Federer", options: ["Wawrinka", "Federer", "Hingis", "Thiem"] },
+        { q: "Who won the Golden Slam in 1988?", correct: "Steffi Graf", options: ["Serena Williams", "Steffi Graf", "Navratilova", "Evert"] },
+        { q: "What is the venue for the French Open?", correct: "Roland Garros", options: ["Wimbledon", "Flushing Meadows", "Roland Garros", "Melbourne Park"] },
+        { q: "Who was the youngest winner of Wimbledon (Men)?", correct: "Becker", options: ["Nadal", "Becker", "Chang", "Wilander"] },
+        { q: "In which month is the Australian Open usually held?", correct: "January", options: ["January", "May", "July", "September"] },
+        { q: "How many sets must a man win in a Grand Slam match?", correct: "3", options: ["2", "3", "4", "5"] },
+        { q: "Which sisters have dominated women's tennis for years?", correct: "Williams Sisters", options: ["Pliskova Sisters", "Williams Sisters", "Fernandez Sisters", "Raducanu Sisters"] },
+        { q: "What does 'Love' mean in tennis scoring?", correct: "Zero", options: ["One", "Zero", "Deuce", "Advantage"] },
+        { q: "Which country hosts the Davis Cup?", correct: "Varies (International)", options: ["USA", "UK", "France", "Varies (International)"] },
+        { q: "Who is the only British man to win Wimbledon in the modern era (before 2020)?", correct: "Andy Murray", options: ["Tim Henman", "Andy Murray", "Greg Rusedski", "Cameron Norrie"] },
+        { q: "What is the term for a score of 40-40?", correct: "Deuce", options: ["Tie", "Draw", "Deuce", "Match Point"] },
+        { q: "Who won the 2023 US Open (Women)?", correct: "Gauff", options: ["Sabalenka", "Swiatek", "Gauff", "Jabeur"] },
+        { q: "Which Grand Slam is played on clay?", correct: "French Open", options: ["US Open", "Wimbledon", "French Open", "Australian Open"] },
+        { q: "Who holds the record for the fastest serve (ATP)?", correct: "Isner", options: ["Roddick", "Isner", "Karlovic", "Groth"] },
+        { q: "How many players are on a court in a doubles match?", correct: "4", options: ["2", "3", "4", "6"] },
+        { q: "Who holds the record for most Grand Slam titles (Women - Open Era)?", correct: "Serena Williams", options: ["Graf", "Serena Williams", "Navratilova", "Evert"] },
+        { q: "What is a serve that is not touched by the receiver called?", correct: "Ace", options: ["Ace", "Winner", "Smash", "Volley"] },
+        { q: "Which country is Novak Djokovic from?", correct: "Serbia", options: ["Croatia", "Serbia", "Russia", "Poland"] },
+        { q: "Who won Wimbledon 5 times in a row (1976-1980)?", correct: "Borg", options: ["McEnroe", "Borg", "Connors", "Laver"] },
+        { q: "What is the final point of a game called?", correct: "Game Point", options: ["Match Point", "Set Point", "Game Point", "Break Point"] },
+        { q: "Who is the current World No. 1 (Men - 2024)?", correct: "Sinner", options: ["Alcaraz", "Djokovic", "Sinner", "Medvedev"] },
+        { q: "Which tournament is played on grass?", correct: "Wimbledon", options: ["French Open", "US Open", "Wimbledon", "Australian Open"] },
+        { q: "What color are the clay courts at Roland Garros?", correct: "Red", options: ["Green", "Blue", "Red", "Grey"] },
+        { q: "Who won the Men's Singles Gold Medal at the 2024 Olympics?", correct: "Djokovic", options: ["Alcaraz", "Djokovic", "Nadal", "Zverev"] },
+        { q: "Which player has the most weeks at World No. 1 (Men)?", correct: "Djokovic", options: ["Federer", "Sampras", "Djokovic", "Nadal"] },
+        { q: "Who is known as 'The Rocket'?", correct: "Rod Laver", options: ["Federer", "Rod Laver", "Sampras", "Agassi"] },
+        { q: "What is the maximum number of sets in a women's Grand Slam match?", correct: "3", options: ["2", "3", "5", "4"] },
+        { q: "Which country does Carlos Alcaraz represent?", correct: "Spain", options: ["Argentina", "Spain", "Mexico", "Italy"] },
+        { q: "Who was the first unseeded player to win Wimbledon (Men)?", correct: "Ivanisevic", options: ["Becker", "Ivanisevic", "Stich", "Cash"] },
+        { q: "What is a score of 40-30 called?", correct: "Game Point", options: ["Break Point", "Game Point", "Set Point", "Deuce"] },
+        { q: "Who is the only player to achieve a Golden Slam?", correct: "Steffi Graf", options: ["Serena", "Graf", "Navratilova", "Agassi"] },
+        { q: "Which surface is the fastest?", correct: "Grass", options: ["Clay", "Hard", "Grass", "Carpet"] },
+        { q: "Who won the 2024 Wimbledon Men's Singles?", correct: "Alcaraz", options: ["Djokovic", "Alcaraz", "Sinner", "Medvedev"] },
+        { q: "How many bounces are allowed before returning the ball?", correct: "1", options: ["1", "2", "3", "0"] },
+        { q: "Who is the most successful women's doubles pair?", correct: "Navratilova & Shriver", options: ["Williams Sisters", "Navratilova & Shriver", "Hingis & Mirza", "Black & Huber"] },
+        { q: "What is the tie-break score limit in the final set of most Slams now?", correct: "10 points", options: ["7 points", "10 points", "12 points", "No Tie-break"] },
+        { q: "Which player has won the most French Open titles?", correct: "Nadal", options: ["Borg", "Nadal", "Federer", "Lendl"] },
+        { q: "Who is nicknamed 'Stan the Man'?", correct: "Wawrinka", options: ["Smith", "Wawrinka", "Edberg", "Murray"] },
+        { q: "Which country hosts the Australian Open?", correct: "Australia", options: ["USA", "UK", "Australia", "France"] },
+        { q: "What is the name of the main court at the US Open?", correct: "Arthur Ashe", options: ["Rod Laver", "Philippe Chatrier", "Arthur Ashe", "Centre Court"] },
+        { q: "Who won the 2004 Wimbledon title at age 17?", correct: "Sharapova", options: ["Williams", "Sharapova", "Hingis", "Davenport"] },
+        { q: "Which shot is hit before the ball bounces?", correct: "Volley", options: ["Smash", "Volley", "Drive", "Lob"] },
+        { q: "Who is the top Polish female tennis player?", correct: "Swiatek", options: ["Radwanska", "Swiatek", "Linette", "Frich"] },
+        { q: "What is the Hawk-Eye system used for?", correct: "Line Calls", options: ["Score Keeping", "Line Calls", "Serve Speed", "Player Stats"] },
+        { q: "Who has the most career aces (Men)?", correct: "Isner", options: ["Karlovic", "Isner", "Federer", "Roddick"] }
+    ]
+};
+
+// ==================== QUESTION MANAGEMENT ====================
+let currentEditingId = null;
+
+function initializeQuestions() {
+    console.log("Initializing questions...");
+    if (Object.keys(allQuestions).length === 0) {
+        console.log("No questions found, loading defaults");
+        allQuestions = JSON.parse(JSON.stringify(defaultQuestions));
+        saveQuestionsToStorage();
+    } else {
+        console.log("Found existing questions:", allQuestions);
+    }
+}
+
+function saveQuestionsToStorage() {
+    localStorage.setItem('sportyq_custom_questions', JSON.stringify(allQuestions));
+    console.log("Questions saved to storage");
+}
+
+function showAddQuestionForm() {
+    console.log("Showing add question form");
+    document.getElementById('question-form-container').style.display = 'block';
+    document.getElementById('form-title').textContent = 'Add New Question';
+    currentEditingId = null;
+    clearQuestionForm();
+}
+
+function clearQuestionForm() {
+    document.getElementById('question-sport').value = 'Football';
+    document.getElementById('question-text-input').value = '';
+    document.getElementById('option1').value = '';
+    document.getElementById('option2').value = '';
+    document.getElementById('option3').value = '';
+    document.getElementById('option4').value = '';
+    document.getElementById('correct-answer').value = '0';
+}
+
+function saveQuestion() {
+    console.log("Saving question...");
+    
+    const sport = document.getElementById('question-sport').value;
+    const questionText = document.getElementById('question-text-input').value.trim();
+    const option1 = document.getElementById('option1').value.trim();
+    const option2 = document.getElementById('option2').value.trim();
+    const option3 = document.getElementById('option3').value.trim();
+    const option4 = document.getElementById('option4').value.trim();
+    const correctIndex = parseInt(document.getElementById('correct-answer').value);
+    
+    console.log("Form data:", { sport, questionText, option1, option2, option3, option4, correctIndex });
+    
+    if (!questionText || !option1 || !option2 || !option3 || !option4) {
+        alert('Please fill in all fields');
+        return;
+    }
+    
+    const options = [option1, option2, option3, option4];
+    const correctAnswer = options[correctIndex];
+    
+    const questionData = { 
+        q: questionText, 
+        correct: correctAnswer, 
+        options: options 
+    };
+    
+    console.log("Question data to save:", questionData);
+    
+    if (currentEditingId !== null) {
+        console.log("Updating existing question at index:", currentEditingId);
+        allQuestions[sport][currentEditingId] = questionData;
+    } else {
+        console.log("Adding new question");
+        if (!allQuestions[sport]) {
+            allQuestions[sport] = [];
+        }
+        allQuestions[sport].push(questionData);
+    }
+    
+    saveQuestionsToStorage();
+    loadAllQuestions();
+    cancelEdit();
+    alert('Question saved successfully!');
+}
+
+function loadAllQuestions() {
+    console.log("Loading all questions...");
+    const container = document.getElementById('questions-container');
+    container.innerHTML = '';
+    
+    let hasQuestions = false;
+    for (const sport in allQuestions) {
+        if (allQuestions[sport] && allQuestions[sport].length > 0) {
+            hasQuestions = true;
+            console.log(`Loading ${allQuestions[sport].length} questions for ${sport}`);
+            allQuestions[sport].forEach((question, index) => {
+                const questionElement = createQuestionElement(sport, question, index);
+                container.appendChild(questionElement);
+            });
+        }
+    }
+    
+    if (!hasQuestions) {
+        console.log("No questions found to display");
+        container.innerHTML = '<p style="text-align: center; color: #94a3b8;">No questions found. Add some questions to get started!</p>';
+    }
+}
+
+function createQuestionElement(sport, question, index) {
+    const div = document.createElement('div');
+    div.className = 'question-item';
+    div.innerHTML = `
+        <div class="question-header">
+            <span class="question-sport">${sport}</span>
+            <div class="question-actions">
+                <button class="admin-btn" onclick="editQuestion('${sport}', ${index})">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="admin-btn danger" onclick="deleteQuestion('${sport}', ${index})">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+        <div class="question-text">${question.q}</div>
+        <div class="question-options">
+            ${question.options.map((opt, optIndex) => `
+                <div class="option-item ${opt === question.correct ? 'correct' : ''}">
+                    ${String.fromCharCode(65 + optIndex)}. ${opt}
+                    ${opt === question.correct ? ' ✓' : ''}
+                </div>
+            `).join('')}
+        </div>
+    `;
+    return div;
+}
+
+function editQuestion(sport, index) {
+    console.log(`Editing question: ${sport} at index ${index}`);
+    const question = allQuestions[sport][index];
+    document.getElementById('question-form-container').style.display = 'block';
+    document.getElementById('form-title').textContent = 'Edit Question';
+    
+    document.getElementById('question-sport').value = sport;
+    document.getElementById('question-text-input').value = question.q;
+    document.getElementById('option1').value = question.options[0];
+    document.getElementById('option2').value = question.options[1];
+    document.getElementById('option3').value = question.options[2];
+    document.getElementById('option4').value = question.options[3];
+    
+    const correctIndex = question.options.indexOf(question.correct);
+    document.getElementById('correct-answer').value = correctIndex.toString();
+    
+    currentEditingId = index;
+    console.log("Edit form populated, currentEditingId:", currentEditingId);
+}
+
+function deleteQuestion(sport, index) {
+    console.log(`Deleting question: ${sport} at index ${index}`);
+    if (confirm('Are you sure you want to delete this question?')) {
+        allQuestions[sport].splice(index, 1);
+        saveQuestionsToStorage();
+        loadAllQuestions();
+    }
+}
+
+function cancelEdit() {
+    document.getElementById('question-form-container').style.display = 'none';
+    currentEditingId = null;
+}
+
+function refreshQuestions() {
+    loadAllQuestions();
+}
+
+// ==================== ADMIN AUTHENTICATION ====================
+function adminSignIn() {
+    const adminPassword = document.getElementById('admin-password').value.trim();
+    if (!adminPassword) {
+        showError('admin-error', 'Please enter admin password');
+        return;
+    }
+    if (adminPassword === ADMIN_CONFIG.password) {
+        closeModal('adminSigninModal');
+        document.getElementById('auth-btns').style.display = 'none';
+        document.getElementById('admin-display').style.display = 'flex';
+        localStorage.setItem('sportyq_admin_session', 'true');
+        openAdminPanel();
+    } else {
+        showError('admin-error', 'Invalid admin password');
+    }
+}
+
+function openAdminPanel() {
+    console.log("Opening admin panel");
+    switchSection('admin-panel');
+    loadAllQuestions();
+}
+
+function checkAdminSession() {
+    const isAdmin = localStorage.getItem('sportyq_admin_session');
+    if (isAdmin === 'true') {
+        document.getElementById('auth-btns').style.display = 'none';
+        document.getElementById('admin-display').style.display = 'flex';
+    }
+}
+
+// ==================== USER AUTHENTICATION ====================
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+function validatePassword(password) {
+    return password.length >= 6;
+}
+
+function showError(elementId, message) {
+    const element = document.getElementById(elementId);
+    element.textContent = message;
+    element.style.display = 'block';
+    setTimeout(() => { element.style.display = 'none'; }, 5000);
+}
+
+function showSuccess(elementId, message) {
+    const element = document.getElementById(elementId);
+    element.textContent = message;
+    element.style.display = 'block';
+    setTimeout(() => { element.style.display = 'none'; }, 5000);
+}
+
+function clearFormErrors() {
+    document.getElementById('signin-error').style.display = 'none';
+    document.getElementById('signup-error').style.display = 'none';
+    document.getElementById('signup-success').style.display = 'none';
+    document.getElementById('admin-error').style.display = 'none';
+}
+
+function signIn() {
+    clearFormErrors();
+    const email = document.getElementById('signin-email').value.trim();
+    const password = document.getElementById('signin-password').value;
+    if (!email || !password) {
+        showError('signin-error', 'Please fill in all fields');
+        return;
+    }
+    if (!validateEmail(email)) {
+        showError('signin-error', 'Please enter a valid email address');
+        return;
+    }
+    if (!userDatabase[email]) {
+        showError('signin-error', 'No account found with this email');
+        return;
+    }
+    if (userDatabase[email].password !== password) {
+        showError('signin-error', 'Incorrect password');
+        return;
+    }
+    const name = userDatabase[email].name;
+    document.getElementById('username-span').innerText = name;
+    closeModal('signinModal');
+    document.getElementById('auth-btns').style.display = 'none';
+    document.getElementById('user-display').style.display = 'flex';
+    switchSection('sports-selection');
+    localStorage.setItem('sportyq_current_user', JSON.stringify({ email: email, name: name }));
+}
+
+function signUp() {
+    clearFormErrors();
+    const name = document.getElementById('signup-name').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value;
+    if (!name || !email || !password) {
+        showError('signup-error', 'Please fill in all fields');
+        return;
+    }
+    if (!validateEmail(email)) {
+        showError('signup-error', 'Please enter a valid email address');
+        return;
+    }
+    if (!validatePassword(password)) {
+        showError('signup-error', 'Password must be at least 6 characters long');
+        return;
+    }
+    if (userDatabase[email]) {
+        showError('signup-error', 'An account with this email already exists');
+        return;
+    }
+    userDatabase[email] = { name: name, password: password };
+    localStorage.setItem('sportyq_users', JSON.stringify(userDatabase));
+    showSuccess('signup-success', 'Account created successfully! You can now sign in.');
+    document.getElementById('signup-name').value = '';
+    document.getElementById('signup-email').value = '';
+    document.getElementById('signup-password').value = '';
+    setTimeout(() => {
+        closeModal('signupModal');
+        openModal('signinModal');
+    }, 2000);
+}
+
+function logout() {
+    localStorage.removeItem('sportyq_current_user');
+    localStorage.removeItem('sportyq_admin_session');
+    location.reload();
+}
+
+function checkLoggedInUser() {
+    const currentUser = JSON.parse(localStorage.getItem('sportyq_current_user'));
+    if (currentUser) {
+        document.getElementById('username-span').innerText = currentUser.name;
+        document.getElementById('auth-btns').style.display = 'none';
+        document.getElementById('user-display').style.display = 'flex';
+    }
+    checkAdminSession();
+}
+
+// ==================== MODAL MANAGEMENT ====================
+document.querySelector('.signin-btn').addEventListener('click', ()=> openModal('signinModal'));
+document.querySelector('.signup-btn').addEventListener('click', ()=> openModal('signupModal'));
+document.querySelector('.admin-signin-btn').addEventListener('click', ()=> openModal('adminSigninModal'));
+
+function openModal(id){ 
+    clearFormErrors();
+    document.getElementById(id).classList.add('active'); 
+}
+function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+function openSignupFromSignin() { closeModal('signinModal'); openModal('signupModal'); }
+function openSigninFromSignup() { closeModal('signupModal'); openModal('signinModal'); }
+
+// ==================== NAVIGATION ====================
+let currentSport = "";
+let currentMode = "";
+let score = 0;
+let currentQuestionData = null;
+let slideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const sections = document.querySelectorAll('.section');
+
+function switchSection(className) {
+    sections.forEach(sec => sec.classList.remove('active'));
+    document.querySelector(`.${className}`).classList.add('active');
+}
+
+function chooseQuestionType(sport){
+    currentSport = sport;
+    document.getElementById('sportName').innerText = `Mission: ${sport}`;
+    openModal('questionTypeModal');
+}
+
+// ==================== QUIZ GAME LOGIC ====================
+function startQuiz(mode) {
+    currentMode = mode;
+    closeModal('questionTypeModal');
+    switchSection('quiz-section');
+    document.getElementById('quiz-sport-label').innerText = currentSport + (mode === 'AI' ? " (AI Mode)" : "");
+    score = 0;
+    updateScore();
+    if (currentMode === 'AI') {
+        initAiDeck(currentSport);
+    } else {
+        initClassicDeck(currentSport);
+    }
+    loadQuestion();
+}
+
+function loadQuestion() {
+    document.getElementById('next-btn').style.display = 'none';
+    const container = document.getElementById('options-container');
+    container.innerHTML = "";
+    if (currentMode === 'AI') {
+        currentQuestionData = getNextAiQuestion(currentSport);
+    } else {
+        if (classicDeck.length === 0) {
+            initClassicDeck(currentSport);
+        }
+        let qRaw = classicDeck.pop();
+        currentQuestionData = {
+            question: qRaw.q,
+            correct: qRaw.correct,
+            options: shuffleArray([...qRaw.options])
+        };
+    }
+    document.getElementById('question-text').innerText = currentQuestionData.question;
+    currentQuestionData.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+        btn.dataset.answer = opt;
+        btn.onclick = () => handleAnswer(btn, opt);
+        container.appendChild(btn);
+    });
+}
+
+function handleAnswer(btn, selectedValue) {
+    const allBtns = document.querySelectorAll('.option-btn');
+    allBtns.forEach(b => b.disabled = true);
+    if (selectedValue === currentQuestionData.correct) {
+        btn.classList.add('correct');
+        score += 10;
+        updateScore();
+        triggerCelebration();
+        document.querySelector('.quiz-container').classList.add('pulse-effect');
+        setTimeout(() => {
+            document.querySelector('.quiz-container').classList.remove('pulse-effect');
+        }, 500);
+    } else {
+        btn.classList.add('wrong');
+        allBtns.forEach(b => {
+            if (b.dataset.answer === currentQuestionData.correct) b.classList.add('correct');
+        });
+    }
+    document.getElementById('next-btn').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+    loadQuestion();
+}
+
+function updateScore() {
+    document.getElementById('score-val').innerText = score;
+}
+
+function exitToMenu() {
+    switchSection('sports-selection');
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function showSlides() {
+    if (slides.length === 0) return;
+    slides[slideIndex].classList.remove('active');
+    slideIndex++;
+    if (slideIndex >= slides.length) slideIndex = 0;
+    slides[slideIndex].classList.add('active');
+}
+
+// ==================== CELEBRATION EFFECTS ====================
+function triggerCelebration() {
+    const container = document.getElementById('celebrationContainer');
+    container.style.display = 'block';
+    container.innerHTML = '';
+    const celebrationTypes = ['confetti', 'emoji', 'fireworks', 'scorePopup'];
+    const selectedType = celebrationTypes[Math.floor(Math.random() * celebrationTypes.length)];
+    switch(selectedType) {
+        case 'confetti': createConfetti(); break;
+        case 'emoji': createEmojiCelebration(); break;
+        case 'fireworks': createFireworks(); break;
+        case 'scorePopup': createScorePopup(); break;
+    }
+    setTimeout(() => { container.style.display = 'none'; }, 3000);
+}
+
+function createConfetti() {
+    const container = document.getElementById('celebrationContainer');
+    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+    for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        const animation = confetti.animate([
+            { top: '0px', opacity: 1, transform: `rotate(0deg)` },
+            { top: '100vh', opacity: 0, transform: `rotate(${Math.random() * 720}deg)` }
+        ], { duration: 2000 + Math.random() * 1000, easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)' });
+        container.appendChild(confetti);
+    }
+}
+
+function createEmojiCelebration() {
+    const container = document.getElementById('celebrationContainer');
+    const emojis = ['🎉', '🥳', '🔥', '⭐', '🏆', '💯', '👍', '🚀'];
+    for (let i = 0; i < 30; i++) {
+        const emoji = document.createElement('div');
+        emoji.className = 'emoji-celebration';
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * 100 + 'vw';
+        emoji.style.animationDelay = (Math.random() * 1) + 's';
+        container.appendChild(emoji);
+    }
+}
+
+function createFireworks() {
+    const container = document.getElementById('celebrationContainer');
+    for (let i = 0; i < 15; i++) {
+        const firework = document.createElement('div');
+        firework.className = 'firework';
+        firework.style.left = Math.random() * 80 + 10 + 'vw';
+        firework.style.top = Math.random() * 80 + 10 + 'vh';
+        firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        const explosion = firework.animate([
+            { width: '5px', height: '5px', opacity: 1, boxShadow: '0 0 10px #fff' },
+            { width: '100px', height: '100px', opacity: 0, boxShadow: '0 0 50px #fff' }
+        ], { duration: 1000, easing: 'ease-out' });
+        container.appendChild(firework);
+    }
+}
+
+function createScorePopup() {
+    const container = document.getElementById('celebrationContainer');
+    const popup = document.createElement('div');
+    popup.className = 'score-popup';
+    popup.textContent = '+10 Points!';
+    popup.style.left = '50%';
+    popup.style.top = '50%';
+    popup.style.transform = 'translate(-50%, -50%)';
+    container.appendChild(popup);
+}
+
+// ==================== AI QUESTION GENERATION ====================
+const sportsOntology = {
+    Football: {
+        entities: [
+            { name: "Lionel Messi", team: "Inter Miami", country: "Argentina", position: "Forward", league: "MLS" },
+            { name: "Cristiano Ronaldo", team: "Al Nassr", country: "Portugal", position: "Forward", league: "Saudi Pro League" }
+        ],
+        relations: ["team", "country", "league", "position"]
+    },
+    Cricket: {
+        entities: [
+            { name: "Virat Kohli", team: "India", role: "Batsman", ipl_team: "RCB" },
+            { name: "Pat Cummins", team: "Australia", role: "Bowler", ipl_team: "SRH" }
+        ],
+        relations: ["team", "role", "ipl_team"]
+    },
+    NBA: {
+        entities: [
+            { name: "LeBron James", team: "Lakers", position: "Forward", college: "None (High School)" },
+            { name: "Steph Curry", team: "Warriors", position: "Guard", college: "Davidson" }
+        ],
+        relations: ["team", "position", "college"]
+    },
+    Tennis: {
+        entities: [
+            { name: "Novak Djokovic", country: "Serbia", hand: "Right-handed", best_surface: "Hard Court" },
+            { name: "Carlos Alcaraz", country: "Spain", hand: "Right-handed", best_surface: "Clay/Grass" }
+        ],
+        relations: ["country", "hand", "best_surface"]
+    }
+};
+
+let aiDeck = [];
+let classicDeck = [];
+
+function initAiDeck(sport) {
+    aiDeck = [];
+    const domain = sportsOntology[sport];
+    if (!domain) return;
+    domain.entities.forEach(entity => {
+        domain.relations.forEach(relation => {
+            aiDeck.push({ entity, relation });
+        });
+    });
+    shuffleArray(aiDeck);
+}
+
+function initClassicDeck(sport) {
+    classicDeck = [...allQuestions[sport]];
+    shuffleArray(classicDeck);
+}
+
+function getNextAiQuestion(sport) {
+    if (aiDeck.length === 0) initAiDeck(sport);
+    const { entity, relation } = aiDeck.pop();
+    const answer = entity[relation];
+    const potentialDistractors = new Set();
+    const domain = sportsOntology[sport];
+    domain.entities.forEach(e => {
+        if (e[relation] !== answer) potentialDistractors.add(e[relation]);
+    });
+    if (potentialDistractors.size < 3) {
+        if(relation === "country") potentialDistractors.add("Brazil").add("Germany").add("Italy");
+        if(relation === "team") potentialDistractors.add("Unknown FC").add("Athletic Club").add("Sporting CP");
+        if(relation === "league") potentialDistractors.add("Serie A").add("Ligue 1").add("Eredivisie");
+        if(relation === "position") potentialDistractors.add("Goalkeeper").add("Coach").add("Sweeper");
+        if(relation === "college") potentialDistractors.add("UCLA").add("North Carolina").add("Michigan");
+        if(relation === "best_surface") potentialDistractors.add("Carpet").add("Wood").add("Indoor");
+        if(relation === "hand") potentialDistractors.add("Ambidextrous");
+    }
+    const distractors = Array.from(potentialDistractors).slice(0, 3);
+    let questionText = "";
+    switch(relation) {
+        case "team": questionText = `Which team does ${entity.name} currently play for?`; break;
+        case "country": questionText = `Which country does ${entity.name} represent internationally?`; break;
+        case "role": questionText = `What is the primary role of ${entity.name} in Cricket?`; break;
+        case "league": questionText = `In which league does ${entity.name} currently compete?`; break;
+        case "ipl_team": questionText = `Which IPL franchise does ${entity.name} play for?`; break;
+        case "position": questionText = `What is ${entity.name}'s primary position on the field/court?`; break;
+        case "hand": questionText = `Does ${entity.name} play Left-handed or Right-handed?`; break;
+        case "college": questionText = `Which college did ${entity.name} attend before the NBA?`; break;
+        case "best_surface": questionText = `On which surface is ${entity.name} considered most dominant?`; break;
+        default: questionText = `What is the ${relation} of ${entity.name}?`;
+    }
+    return {
+        type: "AI_GENERATED",
+        question: questionText,
+        correct: answer,
+        options: shuffleArray([answer, ...distractors]),
+        logicTrace: `Fact: (${entity.name}, ${relation}, ${answer}) | Remaining in Deck: ${aiDeck.length}`
+    };
+}
+
+// ==================== INITIALIZATION ====================
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM loaded, initializing application...");
+    initializeQuestions();
+    checkLoggedInUser();
+    if (slides.length > 0) setInterval(showSlides, 3000);
+});
+</script>
+</body>
+</html>
