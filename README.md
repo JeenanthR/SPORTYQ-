@@ -87,6 +87,9 @@ git clone https://github.com/your-username/SportyQ.git
 
 ---
 
+* Website Link
+* https://bit.ly/sportyQ
+
 ## 🔐 Admin Access
 
 * Click on the **Admin** button the application.
