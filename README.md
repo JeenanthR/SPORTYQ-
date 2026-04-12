@@ -87,7 +87,7 @@ git clone https://github.com/your-username/SportyQ.git
 
 ---
 
-* Website Link
+### Website Link
 * https://bit.ly/sportyQ
 
 ## 🔐 Admin Access
